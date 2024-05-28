@@ -15,8 +15,8 @@ scr = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("EDL GAME")
 
 player = Personagem(50, 50, 50, 50, (0, 0, 255))
-gun = Escopeta(player.x,player.y)
-# gun = Disco(player.x,player.y)
+# gun = Escopeta(player.x,player.y)
+gun = Disco(player.x,player.y)
 
 while True:
     scr.fill((255,255,255)) 
@@ -43,6 +43,9 @@ while True:
     #Atualizacao posicao arma com o personagem
     gun.x = player.x
     gun.y = player.y
+
+    #Atualização tiros na tela
+    gun.redesenha_tiro()
 
     #Eventos e Desenho da arma
     gun.event(keys,scr,global_count)

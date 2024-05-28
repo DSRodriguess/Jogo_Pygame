@@ -7,18 +7,20 @@ class Escopeta(Arma):
     def __init__(self,x,y):
         super().__init__(x,y)
         self.cor = (128,128,128)
-        self.velocidade = 0.25
+        self.velocidade = 0.5
         self.dano = 1
-        self.alcance = 30 #30% da tela
+        self.alcance = 200 #30% da tela
+        self.intervalo = 250 #taxa de tiros em milisegundos
+        self.largura_tiro = 5
+        self.altura_tiro = 5
+
 
     def draw(self,scr):
         pygame.draw.rect(scr,self.cor,(self.x+40, self.y+20,30,5))
+        for tiro in self.tiros:
+             pygame.draw.rect(scr,(0,0,0),(tiro['x'],tiro['y'],self.largura_tiro,self.altura_tiro))
 
-    def atira(self,scr,count):
-            pygame.draw.rect(scr,(0,0,0),(self.x+50+(count), self.y+18,10,10))
-
-    def event(self, keys,scr,count):
-        super().event(keys,scr,count)
-        if keys[K_x] or keys[pygame.K_SPACE]:
-            self.atira(scr,count)
-
+    def atira(self):
+            self.tiros.append({'x':self.x+50, 'y':self.y+15,'distancia':0})
+            self.tiros.append({'x':self.x+50, 'y':self.y+25,'distancia':0})
+            self.tempo_ultimo_tiro = pygame.time.get_ticks()

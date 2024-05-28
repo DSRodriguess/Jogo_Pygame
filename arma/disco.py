@@ -4,18 +4,20 @@ from arma.arma import Arma
 
 class Disco(Arma):
     def __init__(self,x,y):
+        super().__init__(x,y)
         self.cor = (255,165,0)
-        self.velocidade = 0.70
-        self.dano = 3
-        self.alcance = 10 #10% da tela
+        self.velocidade = 0.5
+        self.dano = 5
+        self.alcance = 300 
+        self.intervalo = 500
+        self.raio = 20
 
     def draw(self,scr):
         pygame.draw.circle(scr,self.cor,(self.x+55, self.y+20),15)
-    
-    def atira(self,scr,count):
-            pygame.draw.circle(scr,self.cor,(self.x+55+(count), self.y+20),15)
-         
-    def event(self, keys,scr,count):
-        if keys[K_x] or keys[pygame.K_SPACE]:
-            self.atira(scr,count)
-        
+        for tiro in self.tiros:
+            pygame.draw.circle(scr,self.cor,(tiro['x'],tiro['y']),self.raio)
+            
+
+    def atira(self):
+        self.tiros.append({'x':self.x+50, 'y':self.y+15,'distancia':0})
+        self.tempo_ultimo_tiro = pygame.time.get_ticks()
