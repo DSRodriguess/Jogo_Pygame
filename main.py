@@ -1,4 +1,4 @@
-import pygame, sys
+
 from pygame.locals import *
 from sys import exit
 from personagem.personagem import Personagem
@@ -10,12 +10,14 @@ from arma.disco import Disco
 
 pygame.init()
 
-altura = 500
-largura = 500
+#Definoções da tela
+largura = 1000
+altura = 800
 global_count = 0
 scr = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("EDL GAME")
 
+stage = stage(scr, altura, largura)
 
 player = Player(50, 50, 50, 50, (0, 0, 255), 3)
 boss = Boss(300, 300, 100, 100, (150, 75, 0), 10)
@@ -24,6 +26,9 @@ gun = Disco(player.x,player.y)
 
 while True:
     scr.fill((255,255,255)) 
+    stage.draw()
+    grids(scr,altura,largura)
+
     for ev in pygame.event.get():
 
         if ev.type == pygame.QUIT:
