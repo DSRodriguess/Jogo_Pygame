@@ -24,8 +24,8 @@ class Arma:
             tiro['x'] += self.velocidade
             tiro['distancia'] +=self.velocidade
         #Se o tiro chegar no fim da tela ele sai da lista    
-        #TODO mudar 500 para o limite da tela
-        self.tiros = [tiro for tiro in self.tiros if tiro['x'] < 500 and tiro['distancia'] < self.alcance]
+        #TODO mudar 1000 para o limite da tela
+        self.tiros = [tiro for tiro in self.tiros if tiro['x'] < 1000 and tiro['distancia'] < self.alcance]
 
     def event(self, keys,scr,count):
         tempo_atual = pygame.time.get_ticks()
