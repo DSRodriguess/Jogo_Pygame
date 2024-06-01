@@ -1,4 +1,4 @@
-
+import pygame
 from pygame.locals import *
 from sys import exit
 from personagem.personagem import Personagem
@@ -7,6 +7,7 @@ from personagem.boss import Boss
 from arma.arma import Arma
 from arma.escopeta import Escopeta
 from arma.disco import Disco
+from stage import *
 
 pygame.init()
 
@@ -19,8 +20,8 @@ pygame.display.set_caption("EDL GAME")
 
 stage = stage(scr, altura, largura)
 
-player = Player(50, 50, 50, 50, (0, 0, 255), 3)
-boss = Boss(300, 300, 100, 100, (150, 75, 0), 10)
+player = Player(150, 450, 50, 50, (0, 0, 255), 3)
+boss = Boss(780, 400, 100, 100, (150, 75, 0), 10)
 # gun = Escopeta(player.x,player.y)
 gun = Disco(player.x,player.y)
 
