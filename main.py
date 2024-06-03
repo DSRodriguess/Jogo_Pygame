@@ -34,7 +34,7 @@ while True:
 
         if ev.type == pygame.QUIT:
             pygame.quit()
-            sys.exit()
+            exit()
         if ev.type == pygame.KEYDOWN:
             key = pygame.key.name(ev.key)
             print(key, "tecla Pressionada")
