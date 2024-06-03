@@ -20,10 +20,10 @@ pygame.display.set_caption("EDL GAME")
 
 stage = stage(scr, altura, largura)
 
-player = Player(150, 450, 50, 50, (0, 0, 255), 3)
-boss = Boss(780, 400, 100, 100, (150, 75, 0), 10)
-# gun = Escopeta(player.x,player.y)
-gun = Disco(player.x,player.y)
+player = Player(150, 650, 50, 50, (0, 0, 255), 3)
+boss = Boss(780, 600, 100, 100, (150, 75, 0), 10)
+gun = Escopeta(player.x,player.y)
+# gun = Disco(player.x,player.y)
 
 while True:
     scr.fill((255,255,255)) 
