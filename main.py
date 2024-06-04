@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame
 from pygame.locals import *
 from sys import exit
 from personagem.personagem import Personagem
@@ -7,28 +7,34 @@ from personagem.boss import Boss
 from arma.arma import Arma
 from arma.escopeta import Escopeta
 from arma.disco import Disco
+from stage import *
 
 pygame.init()
 
-altura = 500
-largura = 500
+#Definoções da tela
+largura = 1000
+altura = 800
 global_count = 0
 scr = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("EDL GAME")
 
+stage = stage(scr, altura, largura)
 
-player = Player(50, 50, 50, 50, (0, 0, 255), 3)
-boss = Boss(300, 300, 100, 100, (150, 75, 0), 10)
+player = Player(150, 650, 50, 50, (0, 0, 255), 3)
+boss = Boss(780, 600, 100, 100, (150, 75, 0), 10)
 gun = Escopeta(player.x,player.y)
-#gun = Disco(player.x,player.y)
+# gun = Disco(player.x,player.y)
 
 while True:
     scr.fill((255,255,255)) 
+    stage.draw()
+    grids(scr,altura,largura)
+
     for ev in pygame.event.get():
 
         if ev.type == pygame.QUIT:
             pygame.quit()
-            sys.exit()
+            exit()
         if ev.type == pygame.KEYDOWN:
             key = pygame.key.name(ev.key)
             print(key, "tecla Pressionada")

@@ -6,6 +6,16 @@ class Player(Personagem):
     def __init__(self, x, y, largura, altura, cor, vida=3):
         super().__init__(x, y, largura, altura, cor, vida)
         self.vidas_iniciais = vida
+        
+    def move(self, keys):
+        if keys[K_a] or keys[pygame.K_LEFT]:
+            self.x -= 1.0
+        if keys[K_d] or keys[pygame.K_RIGHT]:
+            self.x += 1.0
+        if keys[K_w] or keys[pygame.K_UP]:
+            self.y -= 1.0
+        if keys[K_s] or keys[pygame.K_DOWN]:
+            self.y += 1.0
 
     def draw(self, scr):
         super().draw(scr)
@@ -20,3 +30,4 @@ class Player(Personagem):
             self.vida -= 1
         else:
             print("Game Over")
+
