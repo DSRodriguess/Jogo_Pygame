@@ -17,10 +17,14 @@ class Escopeta(Arma):
 
     def draw(self,scr):
         pygame.draw.rect(scr,self.cor,(self.x+40, self.y+20,30,5))
-        for tiro in self.tiros:
-             pygame.draw.rect(scr,(0,0,0),(tiro['x'],tiro['y'],self.largura_tiro,self.altura_tiro))
+        #for tiro in self.tiros:
+             #pygame.draw.rect(scr,(0,0,0),(tiro['x'],tiro['y'],self.largura_tiro,self.altura_tiro))
 
     def atira(self):
             self.tiros.append({'x':self.x+65, 'y':self.y+15,'distancia':0})
             self.tiros.append({'x':self.x+65, 'y':self.y+25,'distancia':0})
             self.tempo_ultimo_tiro = pygame.time.get_ticks()
+
+
+
+

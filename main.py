@@ -40,25 +40,23 @@ while True:
             print(key, "tecla Pressionada")
         if ev.type == pygame.MOUSEMOTION:
             pos = pygame.mouse.get_pos()
-            # btn = pygame.mouse.get_pressed()
             print("x {},y {}".format(pos[0], pos[1]))
 
     global_count += 1 
-    if global_count > max(altura,largura) : global_count = 0
+    if global_count > max(altura,largura) : 
+        global_count = 0
 
     keys = pygame.key.get_pressed()
     player.move(keys)
     player.draw(scr)
     boss.draw(scr)
 
-    #boss.take_damage(0.1) 
-
     #Atualizacao posicao arma com o personagem
     gun.x = player.x
     gun.y = player.y
 
-    #Atualização tiros na tela
-    gun.redesenha_tiro()
+    # Atualização tiros na tela e checagem de colisões
+    gun.redesenha_tiro(scr, boss)
 
     #Eventos e Desenho da arma
     gun.event(keys,scr,global_count)

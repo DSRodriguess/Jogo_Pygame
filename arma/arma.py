@@ -19,15 +19,25 @@ class Arma:
     def draw(self,scr):
         pass
 
-    def redesenha_tiro(self):
+    def checar_colisao(self, tiro, boss):
+        tiro_rect = pygame.Rect(tiro['x'], tiro['y'], 5, 5) 
+        boss_rect = pygame.Rect(boss.x, boss.y, boss.largura, boss.altura)
+        return tiro_rect.colliderect(boss_rect)
+
+
+    def redesenha_tiro(self, scr, boss):
         for tiro in self.tiros:
             tiro['x'] += self.velocidade
-            tiro['distancia'] +=self.velocidade
-        #Se o tiro chegar no fim da tela ele sai da lista    
-        #TODO mudar 1000 para o limite da tela
-        self.tiros = [tiro for tiro in self.tiros if tiro['x'] < 1000 and tiro['distancia'] < self.alcance]
+            tiro['distancia'] += self.velocidade
 
-    def event(self, keys,scr,count):
+            pygame.draw.rect(scr, (0, 0, 0), (tiro['x'], tiro['y'], 5, 5))  # Desenha os tiros
+            if self.checar_colisao(tiro, boss): 
+                boss.take_damage(self.dano)
+                self.tiros.remove(tiro)
+            elif tiro['distancia'] > self.alcance:
+                self.tiros.remove(tiro)
+
+    def event(self, keys, scr, count):
         tempo_atual = pygame.time.get_ticks()
         if (keys[K_x] or keys[pygame.K_SPACE]) and (tempo_atual - self.tempo_ultimo_tiro > self.intervalo):
             self.atira()
