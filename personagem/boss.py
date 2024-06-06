@@ -36,9 +36,7 @@ class Boss(Personagem):
     def checa_dano_player(self,player):
         if self.checar_colisao(player):
             player.tempo_ultimo_dano = pygame.time.get_ticks()
-            player.damaged = True
-            #Recuo do personagem
-            player.x = self.x - player.largura -50
+            player.x = self.x - player.largura -50 #recuo do player
             if player.invencivel == False:
                 player.take_damage(self.dano)
 

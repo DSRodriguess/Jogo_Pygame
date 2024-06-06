@@ -9,6 +9,7 @@ class Personagem:
         self.y = y
         self.cor = cor
         self.vida = vida
+        self.centro = (self.x+(self.largura/2),self.y+(self.altura/2))
 
     def draw(self, scr):
         pygame.draw.rect(scr, self.cor, (self.x, self.y, self.largura, self.altura))
@@ -16,3 +17,5 @@ class Personagem:
     def take_damage(self, amount):
         pass
 
+    def atualiza_centro(self):
+        self.centro = self.x+(self.largura/2),self.y+(self.altura/2)

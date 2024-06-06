@@ -7,8 +7,7 @@ class Player(Personagem):
         super().__init__(x, y, largura, altura, cor, vida)
         self.vidas_iniciais = vida
         self.tempo_ultimo_dano = 0
-        self.tempo_invencibilidade = 1000
-        self.damaged = False
+        self.tempo_invencibilidade = 1000 #1000ms = 1s
         self.invecivel = False
         
     def move(self, keys):
@@ -29,12 +28,6 @@ class Player(Personagem):
         for i in range(self.vida):
             pygame.draw.rect(scr, (255, 0, 0), (10 + i*35, 10, 30, 10))
 
-    # def lose_life(self):
-    #     if self.vida > 0:
-    #         self.vida -= 1
-    #     else:
-    #         print("Game Over")
-
     def reseta_invencibilidade(self):
         tempo_atual = pygame.time.get_ticks()
         if (tempo_atual - self.tempo_ultimo_dano > self.tempo_invencibilidade):
@@ -44,3 +37,5 @@ class Player(Personagem):
         if (self.invecivel == False):
             self.vida -= amount
             self.invencivel = True
+        if (self.vida < 0):
+            print("Game Over")

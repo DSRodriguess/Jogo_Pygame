@@ -44,7 +44,7 @@ while True:
 
     player.move(keys)
     player.draw(scr)
-
+    pygame.draw.lines(scr,(0,255,0),False,(player.centro,boss.centro))
     boss.draw(scr)
     #Atualizacao posicao arma com o personagem
     gun.x = player.x
@@ -59,5 +59,7 @@ while True:
 
     boss.checa_dano_player(player)
     player.reseta_invencibilidade()
+    player.atualiza_centro()
+    boss.atualiza_centro()
     
     pygame.display.update()
