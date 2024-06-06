@@ -6,6 +6,7 @@ class Boss(Personagem):
     def __init__(self, x, y, largura, altura, cor, vida):
         super().__init__(x, y, largura, altura, cor, vida)
         self.vida_max = vida
+        self.dano = 1
     
     def draw(self, scr):
         super().draw(scr)
@@ -26,3 +27,18 @@ class Boss(Personagem):
         self.vida -= amount
         if self.vida < 0:
             self.vida = 0
+
+    def checar_colisao(self, player):
+        player_rect = pygame.Rect(player.x, player.y, player.largura, player.altura)
+        boss_rect = pygame.Rect(self.x, self.y, self.largura, self.altura)
+        return boss_rect.colliderect(player_rect)
+    
+    def checa_dano_player(self,player):
+        if self.checar_colisao(player):
+            player.tempo_ultimo_dano = pygame.time.get_ticks()
+            player.damaged = True
+            #Recuo do personagem
+            player.x = self.x - player.largura -50
+            if player.invencivel == False:
+                player.take_damage(self.dano)
+

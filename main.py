@@ -21,7 +21,7 @@ pygame.display.set_caption("EDL GAME")
 stage = stage(scr, altura, largura)
 
 player = Player(150, 650, 50, 50, (0, 0, 255), 3)
-boss = Boss(780, 600, 100, 100, (150, 75, 0), 10)
+boss = Boss(780, 600, 100, 100, (150, 75, 0), 100)
 gun = Escopeta(player.x,player.y)
 # gun = Disco(player.x,player.y)
 
@@ -38,19 +38,14 @@ while True:
         if ev.type == pygame.KEYDOWN:
             key = pygame.key.name(ev.key)
             print(key, "tecla Pressionada")
-        if ev.type == pygame.MOUSEMOTION:
-            pos = pygame.mouse.get_pos()
-            print("x {},y {}".format(pos[0], pos[1]))
 
-    global_count += 1 
-    if global_count > max(altura,largura) : 
-        global_count = 0
 
     keys = pygame.key.get_pressed()
+
     player.move(keys)
     player.draw(scr)
-    boss.draw(scr)
 
+    boss.draw(scr)
     #Atualizacao posicao arma com o personagem
     gun.x = player.x
     gun.y = player.y
@@ -61,5 +56,8 @@ while True:
     #Eventos e Desenho da arma
     gun.event(keys,scr,global_count)
     gun.draw(scr)
+
+    boss.checa_dano_player(player)
+    player.reseta_invencibilidade()
     
     pygame.display.update()

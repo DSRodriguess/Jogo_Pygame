@@ -13,3 +13,6 @@ class Personagem:
     def draw(self, scr):
         pygame.draw.rect(scr, self.cor, (self.x, self.y, self.largura, self.altura))
 
+    def take_damage(self, amount):
+        pass
+
