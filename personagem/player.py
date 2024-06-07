@@ -39,3 +39,21 @@ class Player(Personagem):
             self.invencivel = True
         if (self.vida < 0):
             print("Game Over")
+
+    def recuar(self,distancia,x_boss,y_boss):
+        if(self.x < x_boss):
+            self.x -= distancia
+        else:
+            self.x += distancia
+
+        if(self.y <= y_boss):
+            self.y -= distancia
+
+
+
+        # self.y -= distancia
+        # m = ((self.y - y_boss)/(self.x-x_boss))
+        # self.y = m * (self.x - x_boss) + y_boss
+        # self.x -= distancia
+    
+

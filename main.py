@@ -61,5 +61,7 @@ while True:
     player.reseta_invencibilidade()
     player.atualiza_centro()
     boss.atualiza_centro()
+
+ 
     
     pygame.display.update()
