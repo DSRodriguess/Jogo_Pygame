@@ -6,6 +6,7 @@ class Player(Personagem):
     def __init__(self, x, y, largura, altura, cor, vida=3):
         super().__init__(x, y, largura, altura, cor, vida)
         self.vidas_iniciais = vida
+        self.moedas = 0 
         
     def move(self, keys):
         if keys[K_a] or keys[pygame.K_LEFT]:

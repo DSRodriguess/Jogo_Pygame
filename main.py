@@ -22,8 +22,22 @@ stage = stage(scr, altura, largura)
 
 player = Player(150, 650, 50, 50, (0, 0, 255), 3)
 boss = Boss(780, 600, 100, 100, (150, 75, 0), 10)
+boss_vivo = True
 gun = Escopeta(player.x,player.y)
 # gun = Disco(player.x,player.y)
+
+tempo_inicial = pygame.time.get_ticks()
+
+def mostrar_relogio(scr, tempo_decorrido):
+    font = pygame.font.Font(None, 36)
+    segundos = tempo_decorrido // 1000
+    minutos = segundos // 60
+    horas = minutos // 60
+    tempo_formatado = "{:02d}:{:02d}:{:02d}".format(horas, minutos % 60, segundos % 60)
+    text = font.render(f"Tempo: {tempo_formatado}", 1, (10, 10, 10))
+    text_rect = text.get_rect()
+    text_rect.topright = (largura - 10, 10)  
+    scr.blit(text, text_rect)
 
 while True:
     scr.fill((255,255,255)) 
@@ -35,12 +49,6 @@ while True:
         if ev.type == pygame.QUIT:
             pygame.quit()
             exit()
-        if ev.type == pygame.KEYDOWN:
-            key = pygame.key.name(ev.key)
-            print(key, "tecla Pressionada")
-        if ev.type == pygame.MOUSEMOTION:
-            pos = pygame.mouse.get_pos()
-            print("x {},y {}".format(pos[0], pos[1]))
 
     global_count += 1 
     if global_count > max(altura,largura) : 
@@ -49,7 +57,9 @@ while True:
     keys = pygame.key.get_pressed()
     player.move(keys)
     player.draw(scr)
-    boss.draw(scr)
+    
+    if boss_vivo:
+        boss.draw(scr)
 
     #Atualizacao posicao arma com o personagem
     gun.x = player.x
@@ -61,5 +71,7 @@ while True:
     #Eventos e Desenho da arma
     gun.event(keys,scr,global_count)
     gun.draw(scr)
+
+    mostrar_relogio(scr, pygame.time.get_ticks() - tempo_inicial)
     
     pygame.display.update()
