@@ -47,7 +47,7 @@ while True:
         global_count = 0
 
     keys = pygame.key.get_pressed()
-    player.move(keys)
+    player.move(keys,stage)
     player.draw(scr)
     boss.draw(scr)
 
