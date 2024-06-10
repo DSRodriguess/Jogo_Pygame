@@ -38,6 +38,6 @@ class Arma:
                 self.tiros.remove(tiro)
 
     def event(self, keys, scr, count):
-        tempo_atual = pygame.time.get_ticks()
+        tempo_atual = pygame.time.get_ticks() #TODO VAI PARA CLASSE GLBOAL
         if (keys[K_x] or keys[pygame.K_SPACE]) and (tempo_atual - self.tempo_ultimo_tiro > self.intervalo):
             self.atira()

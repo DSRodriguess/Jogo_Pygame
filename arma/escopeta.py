@@ -8,7 +8,7 @@ class Escopeta(Arma):
         super().__init__(x,y)
         self.cor = (128,128,128)
         self.velocidade = 2
-        self.dano = 1
+        self.dano = 7
         self.alcance = 200 #30% da tela
         self.intervalo = 700 #taxa de tiros em milisegundos
         self.largura_tiro = 5
