@@ -6,6 +6,12 @@ class Player(Personagem):
     def __init__(self, x, y, largura, altura, cor, vida=3):
         super().__init__(x, y, largura, altura, cor, vida)
         self.vidas_iniciais = vida
+
+        self.tempo_ultimo_dano = 0
+        self.tempo_invencibilidade = 1000 #1000ms = 1s
+        self.invecivel = False
+        
+
         self.rect = pygame.Rect(x, y, largura, altura)
 
     def move(self, keys, stage):
@@ -39,9 +45,32 @@ class Player(Personagem):
         for i in range(self.vida):
             pygame.draw.rect(scr, (255, 0, 0), (10 + i*35, 10, 30, 10))
 
-    def lose_life(self):
-        if self.vida > 0:
-            self.vida -= 1
-        else:
+    def reseta_invencibilidade(self):
+        tempo_atual = pygame.time.get_ticks()
+        if (tempo_atual - self.tempo_ultimo_dano > self.tempo_invencibilidade):
+            self.invencivel = False
+
+    def take_damage(self, amount):
+        if (self.invecivel == False):
+            self.vida -= amount
+            self.invencivel = True
+        if (self.vida < 0):
             print("Game Over")
+
+    def recuar(self,distancia,x_boss,y_boss):
+        if(self.x < x_boss):
+            self.x -= distancia
+        else:
+            self.x += distancia
+
+        if(self.y <= y_boss):
+            self.y -= distancia
+
+
+
+        # self.y -= distancia
+        # m = ((self.y - y_boss)/(self.x-x_boss))
+        # self.y = m * (self.x - x_boss) + y_boss
+        # self.x -= distancia
+    
 
