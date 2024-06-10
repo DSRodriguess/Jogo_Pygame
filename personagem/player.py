@@ -6,19 +6,36 @@ class Player(Personagem):
     def __init__(self, x, y, largura, altura, cor, vida=3):
         super().__init__(x, y, largura, altura, cor, vida)
         self.vidas_iniciais = vida
+
         self.tempo_ultimo_dano = 0
         self.tempo_invencibilidade = 1000 #1000ms = 1s
         self.invecivel = False
         
-    def move(self, keys):
-        if keys[K_a] or keys[pygame.K_LEFT]:
-            self.x -= 1.0
-        if keys[K_d] or keys[pygame.K_RIGHT]:
-            self.x += 1.0
-        if keys[K_w] or keys[pygame.K_UP]:
-            self.y -= 1.0
-        if keys[K_s] or keys[pygame.K_DOWN]:
-            self.y += 1.0
+
+        self.rect = pygame.Rect(x, y, largura, altura)
+
+    def move(self, keys, stage):
+        dx, dy = 0, 0
+
+        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+            dx = -1.0
+        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+            dx = 1.0
+        if keys[pygame.K_w] or keys[pygame.K_UP]:
+            dy = -1.0
+        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+            dy = 1.0
+
+        self.rect.x += dx
+        if stage.check_collision(self.rect):
+            self.rect.x -= dx
+
+        self.rect.y += dy
+        if stage.check_collision(self.rect):
+            self.rect.y -= dy
+
+        self.x = self.rect.x
+        self.y = self.rect.y
 
     def draw(self, scr):
         super().draw(scr)

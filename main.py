@@ -41,8 +41,7 @@ while True:
 
 
     keys = pygame.key.get_pressed()
-
-    player.move(keys)
+    player.move(keys,stage)
     player.draw(scr)
     pygame.draw.lines(scr,(0,255,0),False,(player.centro,boss.centro))
     boss.draw(scr)
