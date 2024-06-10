@@ -21,9 +21,25 @@ pygame.display.set_caption("EDL GAME")
 stage = stage(scr, altura, largura)
 
 player = Player(150, 650, 50, 50, (0, 0, 255), 3)
+
+boss_vivo = True
 boss = Boss(780, 600, 100, 100, (150, 75, 0), 100)
+
 gun = Escopeta(player.x,player.y)
 # gun = Disco(player.x,player.y)
+
+tempo_inicial = pygame.time.get_ticks()
+
+def mostrar_relogio(scr, tempo_decorrido):
+    font = pygame.font.Font(None, 36)
+    segundos = tempo_decorrido // 1000
+    minutos = segundos // 60
+    horas = minutos // 60
+    tempo_formatado = "{:02d}:{:02d}:{:02d}".format(horas, minutos % 60, segundos % 60)
+    text = font.render(f"Tempo: {tempo_formatado}", 1, (10, 10, 10))
+    text_rect = text.get_rect()
+    text_rect.topright = (largura - 10, 10)  
+    scr.blit(text, text_rect)
 
 while True:
     scr.fill((255,255,255)) 
@@ -40,11 +56,15 @@ while True:
             print(key, "tecla Pressionada")
 
 
+
     keys = pygame.key.get_pressed()
     player.move(keys,stage)
     player.draw(scr)
-    pygame.draw.lines(scr,(0,255,0),False,(player.centro,boss.centro))
-    boss.draw(scr)
+
+    if boss_vivo:
+        boss.draw(scr)
+
+
     #Atualizacao posicao arma com o personagem
     gun.x = player.x
     gun.y = player.y
@@ -56,11 +76,11 @@ while True:
     gun.event(keys,scr,global_count)
     gun.draw(scr)
 
+
+    mostrar_relogio(scr, pygame.time.get_ticks() - tempo_inicial)
     boss.checa_dano_player(player)
     player.reseta_invencibilidade()
     player.atualiza_centro()
     boss.atualiza_centro()
 
- 
-    
     pygame.display.update()
