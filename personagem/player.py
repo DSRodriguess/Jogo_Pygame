@@ -63,11 +63,15 @@ class Player(Personagem):
     def recuar(self,distancia,x_boss,y_boss):
         if(self.x < x_boss):
             self.x -= distancia
+            self.rect.x -= distancia
+
         else:
             self.x += distancia
+            self.rect.x += distancia
 
         if(self.y <= y_boss):
             self.y -= distancia
+            self.rect.y -= distancia
 
 
 
