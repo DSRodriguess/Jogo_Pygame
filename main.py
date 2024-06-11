@@ -33,8 +33,17 @@ gun = Escopeta(player.x,player.y)
 # Tempo inicial
 tempo_inicial = pygame.time.get_ticks()
 
+# Moedas iniciais
+moedas_iniciais = 100
+
 # Tempo máximo em milissegundos (120 segundos)
 tempo_maximo = 120 * 1000
+
+# Função para mostrar as moedas na tela
+def mostrar_moedas(scr, moedas):
+    font = pygame.font.Font(None, 36)
+    text = font.render(f"Moedas: {moedas}", 1, (10, 10, 10))
+    scr.blit(text, (10, 50))
 
 # Função para mostrar o relógio na tela com 120 segundos 
 def mostrar_relogio(scr, tempo_decorrido):
@@ -82,6 +91,9 @@ while True:
     # Eventos e Desenho da arma
     gun.event(keys,scr,global_count)
     gun.draw(scr)
+
+    # Mostrar as moedas na tela
+    mostrar_moedas(scr, player.moedas)
 
     # Mostrar o relógio com o tempo restante na tela
     mostrar_relogio(scr, tempo_restante)
