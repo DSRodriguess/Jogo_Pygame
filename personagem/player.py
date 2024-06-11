@@ -6,15 +6,10 @@ class Player(Personagem):
     def __init__(self, x, y, largura, altura, cor, vida=3):
         super().__init__(x, y, largura, altura, cor, vida)
         self.vidas_iniciais = vida
-
         self.moedas = 0 
-
         self.tempo_ultimo_dano = 0
         self.tempo_invencibilidade = 1000 #1000ms = 1s
         self.invecivel = False
-
-        
-
         self.rect = pygame.Rect(x, y, largura, altura)
 
     def move(self, keys, stage):
