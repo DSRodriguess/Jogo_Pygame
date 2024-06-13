@@ -39,6 +39,9 @@ moedas_iniciais = 100
 # Tempo máximo em milissegundos (120 segundos)
 tempo_maximo = 120 * 1000
 
+# Função lambda para calcular o gold total
+calcula_gold_total = lambda tempo, vidas: max(0, (moedas_iniciais - max(0, tempo - 20))) * vidas
+
 # Função para mostrar as moedas na tela
 def mostrar_moedas(scr, moedas):
     font = pygame.font.Font(None, 36)
@@ -103,7 +106,12 @@ while True:
     player.reseta_invencibilidade()
     player.atualiza_centro()
     boss.atualiza_centro()
-
-    # pygame.time.Clock().tick(60)
+    
+    # Verifica se o boss foi derrotado
+    if boss.vida <= 0 and boss_vivo:
+        boss_vivo = False
+        gold_total = calcula_gold_total(tempo_decorrido // 1000, player.vida)
+        print(f"Boss derrotado! Você ganhou {gold_total} moedas.")
+        player.moedas += gold_total
 
     pygame.display.update()
