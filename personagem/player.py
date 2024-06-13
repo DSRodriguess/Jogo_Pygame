@@ -13,29 +13,33 @@ class Player(Personagem):
         self.tempo_invencibilidade = 1000 #1000ms = 1s
         self.invecivel = False
 
+        self.pulo = 1
         
 
         self.rect = pygame.Rect(x, y, largura, altura)
 
     def move(self, keys, stage):
         dx, dy = 0, 0
-
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             dx = -1.0
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             dx = 1.0
         if keys[pygame.K_w] or keys[pygame.K_UP]:
-            dy = -1.0
+            if(self.gravidade == False & self.pulando == False):
+                self.pular(self.y)
+
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
             dy = 1.0
+        self.gravidade = True
 
         self.rect.x += dx
-        if stage.check_collision(self.rect):
+        if stage.check_collision(self.rect,self):
             self.rect.x -= dx
 
         self.rect.y += dy
-        if stage.check_collision(self.rect):
-            self.rect.y -= dy
+        if stage.check_collision(self.rect,self):
+            self.gravidade = False
+            self.rect.y -= dy+1
 
         self.x = self.rect.x
         self.y = self.rect.y
@@ -72,6 +76,7 @@ class Player(Personagem):
         if(self.y <= y_boss):
             self.y -= distancia
             self.rect.y -= distancia
+
 
 
 

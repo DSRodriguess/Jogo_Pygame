@@ -20,7 +20,7 @@ pygame.display.set_caption("EDL GAME")
 
 stage = stage(scr, altura, largura)
 
-player = Player(150, 650, 50, 50, (0, 0, 255), 3)
+player = Player(150, 500, 50, 50, (0, 0, 255), 3)
 
 boss_vivo = True
 boss = Boss(780, 600, 100, 100, (150, 75, 0), 100)
@@ -41,6 +41,8 @@ def mostrar_relogio(scr, tempo_decorrido):
     text_rect.topright = (largura - 10, 10)  
     scr.blit(text, text_rect)
 
+terra =[player]
+
 while True:
     scr.fill((255,255,255)) 
     stage.draw()
@@ -55,7 +57,26 @@ while True:
             key = pygame.key.name(ev.key)
             print(key, "tecla Pressionada")
 
+    def gravidade(coisa):
+        # if(object.gravidade == True):
+        coisa.y += 1
+        coisa.rect.y += 1
+        coisa.draw(scr)
+        return coisa
 
+    print(map(gravidade,terra))
+    #print(player.y)
+    #Gravidade
+
+
+
+
+    # l = [1,2,3,4]
+    # def dobro(x):
+    #     return x*2
+    # dobrado = (map(dobro,l))
+    # dobrado = list(dobrado)
+    # print(dobrado)
 
     keys = pygame.key.get_pressed()
     player.move(keys,stage)
@@ -82,5 +103,5 @@ while True:
     player.reseta_invencibilidade()
     player.atualiza_centro()
     boss.atualiza_centro()
-
+    # player.cair()
     pygame.display.update()
