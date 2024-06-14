@@ -6,6 +6,8 @@ from personagem.boss import Boss
 from arma.escopeta import Escopeta
 from arma.disco import Disco
 from stage import *
+from personagem.ataque import Ataque
+import random
 
 pygame.init()
 
@@ -41,6 +43,13 @@ tempo_maximo = 120 * 1000
 
 # Função lambda para calcular o gold total
 calcula_gold_total = lambda tempo, vidas: max(0, (moedas_iniciais - max(0, tempo - 20))) * vidas
+
+# Lista para armazenar os ataques
+ataques = []
+
+# Temporizador para ataques
+tempo_ultimo_ataque = pygame.time.get_ticks()
+intervalo_ataques = 2000  # 2 segundos
 
 # Função para mostrar as moedas na tela
 def mostrar_moedas(scr, moedas):
@@ -113,5 +122,20 @@ while True:
         gold_total = calcula_gold_total(tempo_decorrido // 1000, player.vida)
         print(f"Boss derrotado! Você ganhou {gold_total} moedas.")
         player.moedas += gold_total
+        
+    # Gerar novos ataques
+    if pygame.time.get_ticks() - tempo_ultimo_ataque > intervalo_ataques:
+        ataques.append(Ataque(largura, altura, player))
+        tempo_ultimo_ataque = pygame.time.get_ticks()
+
+    # Atualizar e desenhar ataques
+    for ataque in ataques[:]:
+        ataque.update()
+        ataque.draw(scr)
+        if ataque.checar_colisao(player):
+            player.take_damage(1)
+            ataques.remove(ataque)
+        elif ataque.y > altura:
+            ataques.remove(ataque)
 
     pygame.display.update()
