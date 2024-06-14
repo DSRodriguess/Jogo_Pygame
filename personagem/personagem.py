@@ -24,16 +24,8 @@ class Personagem:
     def atualiza_centro(self):
         self.centro = self.x+(self.largura/2),self.y+(self.altura/2)
 
-    def pular(self,altura_ultimo_pulo):
-        self.pulando = True
-        # self.altura_ultimo_pulo = self.x
-        # if(self.pulando):
-        if(altura_ultimo_pulo - self.x < self.limite_pulo):
-            self.y -= 25
-            self.rect.y -= 25
-        else:
-            self.gravidade = True
-            self.pulando = True
+    def pular(self):
+        pass
 
         
         
@@ -56,11 +48,11 @@ class Personagem:
         #     if(self.gravidade == False):
         #         break
 
-    # def cair(self):
-    #     if (self.gravidade == True):
-    #         self.y +=1
-    #         self.rect.y +=1
-    #     else:
-    #         pass
+    def cair(self):
+        if (self.gravidade == True):
+            self.y +=1
+            self.rect.y +=1
+        else:
+            pass
         
 

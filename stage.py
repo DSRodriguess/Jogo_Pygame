@@ -32,15 +32,12 @@ class stage():
                 if self.stage[row][col] == 1:
                     pygame.draw.rect(self.scr, (255,0,0), (col*tile_size, row*tile_size, tile_size, tile_size))
 
-    def check_collision(self, rect,player):
+    def check_collision(self, rect):
         for row in range(0, 16):
             for col in range(0, 20):
                 if self.stage[row][col] == 1:
                     wall = pygame.Rect(col * tile_size, row * tile_size, tile_size, tile_size)
                     if rect.colliderect(wall):
-                        player.pulo = 1
-                        player.pulando = False
-                        player.gravidade = False
                         return True
         return False
 

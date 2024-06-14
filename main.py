@@ -8,10 +8,19 @@ from arma.arma import Arma
 from arma.escopeta import Escopeta
 from arma.disco import Disco
 from stage import *
+from pprint import pprint
+
+import os
+
+#Funcao debug, coloque a classe e suas variáveis serão printadas
+#Deixa o jogo mais lento
+def debugar(objeto):
+    os.system('clear')
+    pprint(vars(objeto))
 
 pygame.init()
 
-#Definoções da tela
+#Definições da tela
 largura = 1000
 altura = 800
 global_count = 0
@@ -56,27 +65,10 @@ while True:
         if ev.type == pygame.KEYDOWN:
             key = pygame.key.name(ev.key)
             print(key, "tecla Pressionada")
+        if ev.type == pygame.KEYUP:
+            key = pygame.key.name(ev.key)
+            print(key, "tecla Solta")
 
-    def gravidade(coisa):
-        # if(object.gravidade == True):
-        coisa.y += 1
-        coisa.rect.y += 1
-        coisa.draw(scr)
-        return coisa
-
-    print(map(gravidade,terra))
-    #print(player.y)
-    #Gravidade
-
-
-
-
-    # l = [1,2,3,4]
-    # def dobro(x):
-    #     return x*2
-    # dobrado = (map(dobro,l))
-    # dobrado = list(dobrado)
-    # print(dobrado)
 
     keys = pygame.key.get_pressed()
     player.move(keys,stage)
@@ -99,9 +91,43 @@ while True:
 
 
     mostrar_relogio(scr, pygame.time.get_ticks() - tempo_inicial)
+    
+    #Colisão boss x Player
     boss.checa_dano_player(player)
     player.reseta_invencibilidade()
+
+    #Posicao central player e boss
     player.atualiza_centro()
     boss.atualiza_centro()
-    # player.cair()
+
+    #Gravidade no player
+    player.cair()
+
+    #debug
+    debugar(player)
+    
     pygame.display.update()
+
+
+
+
+
+#---------------------------------------------------Tentativa MAP pra gravidade
+    # def gravidade(coisa):
+    #     # if(object.gravidade == True):
+    #     coisa.y += 1
+    #     coisa.rect.y += 1
+    #     coisa.draw(scr)
+    #     return coisa
+
+    # print(map(gravidade,terra))
+    #print(player.y)
+    #Gravidade
+
+    # l = [1,2,3,4]
+    # def dobro(x):
+    #     return x*2
+    # dobrado = (map(dobro,l))
+    # dobrado = list(dobrado)
+    # print(dobrado)
+#---------------------------------------------------Tentativa MAP pra gravidade
