@@ -30,11 +30,11 @@ class Player(Personagem):
             dy = 1.0
 
         self.rect.x += dx
-        if stage.check_collision(self.rect):
+        if stage.checar_colisao(self.rect):
             self.rect.x -= dx
 
         self.rect.y += dy
-        if stage.check_collision(self.rect):
+        if stage.checar_colisao(self.rect):
             self.rect.y -= dy
 
         self.x = self.rect.x
