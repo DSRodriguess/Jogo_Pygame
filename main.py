@@ -5,26 +5,35 @@ from personagem.player import Player
 from personagem.boss import Boss
 from arma.escopeta import Escopeta
 from arma.disco import Disco
-from stage import *
 from personagem.ataque import Ataque
+from stage.stage import *
+from pprint import pprint
+import os
 import random
 
+#Funcao debug, coloque a classe e suas variáveis serão printadas
+#Deixa o jogo mais lento
+def debugar(objeto):
+    os.system('clear')
+    pprint(vars(objeto))
 
 pygame.init()
 
-# Definoções da tela
 largura = 1000
 altura = 800
 scr = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("EDL GAME")
 
-global_count = 0
+tile_size = 50
+layout = [
+        carregar_layout("./stage/layout1.txt"),
+        carregar_layout("./stage/layout2.txt")
+        ]
 
-# Campo
-stage = stage(scr, altura, largura)
+stage_atual = Stage(scr, layout[1])
 
 # Cria o personagem passando (posição,tamanho, cor e vidas)
-player = Player(150, 650, 50, 50, (0, 0, 255), 3)
+player = Player(150, 500, 50, 50, (0, 0, 255), 3)
 
 boss_vivo = True
 # Cria o Boss passando (posição,tamanho, cor e vidas)
@@ -69,9 +78,11 @@ def mostrar_relogio(scr, tempo_decorrido):
     text_rect.topright = (largura - 10, 10)  
     scr.blit(text, text_rect)
 
+terra =[player]
+pressionando = False
 while True:
     scr.fill((255,255,255)) 
-    stage.draw()
+    stage_atual.draw()
     grids(scr,altura,largura)
 
     for ev in pygame.event.get():
@@ -79,9 +90,17 @@ while True:
         if ev.type == pygame.QUIT:
             pygame.quit()
             exit()
+        if ev.type == pygame.KEYDOWN:
+            key = pygame.key.name(ev.key)
+            # print(key, "tecla Pressionada")
+            pressionando = True
+        if ev.type == pygame.KEYUP:
+            key = pygame.key.name(ev.key)
+            # print(key, "tecla Solta")
+            pressionando = False
 
     keys = pygame.key.get_pressed()
-    player.move(keys,stage)
+    player.move(keys,stage_atual,pressionando)
     player.draw(scr)
 
     tempo_decorrido = pygame.time.get_ticks() - tempo_inicial
@@ -111,9 +130,16 @@ while True:
     # Mostrar o relógio com o tempo restante na tela
     mostrar_relogio(scr, tempo_restante)
 
+
     # Funções de verificação de dado 
+
+    mostrar_relogio(scr, pygame.time.get_ticks() - tempo_inicial)
+    
+    #Colisão boss x Player
     boss.checa_dano_player(player)
     player.reseta_invencibilidade()
+
+    #Posicao central player e boss
     player.atualiza_centro()
     boss.atualiza_centro()
     
@@ -140,4 +166,10 @@ while True:
         elif ataque.y > altura:
             ataques.remove(ataque)
 
+    #Gravidade no player
+    player.cair()
+
+    #debug
+    # debugar(player)
+    
     pygame.display.update()

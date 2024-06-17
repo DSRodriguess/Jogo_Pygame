@@ -19,19 +19,19 @@ class Arma:
     def draw(self,scr):
         pass
 
-    def checar_colisao(self, tiro, boss):
+    @staticmethod
+    def checar_colisao(tiro, boss):
         tiro_rect = pygame.Rect(tiro['x'], tiro['y'], 5, 5) 
         boss_rect = pygame.Rect(boss.x, boss.y, boss.largura, boss.altura)
         return tiro_rect.colliderect(boss_rect)
-
-
+    
     def redesenha_tiro(self, scr, boss):
         for tiro in self.tiros:
             tiro['x'] += self.velocidade
             tiro['distancia'] += self.velocidade
 
             pygame.draw.rect(scr, (0, 0, 0), (tiro['x'], tiro['y'], 5, 5))  # Desenha os tiros
-            if self.checar_colisao(tiro, boss): 
+            if Arma.checar_colisao(tiro, boss): 
                 boss.take_damage(self.dano)
                 self.tiros.remove(tiro)
             elif tiro['distancia'] > self.alcance:
