@@ -23,7 +23,7 @@ layout = [
         carregar_layout("./stage/layout2.txt")
         ]
 
-stage_atual = Stage(scr, altura, largura, layout[0])
+stage_atual = Stage(scr, layout[1])
 
 player = Player(150, 650, 50, 50, (0, 0, 255), 3)
 
@@ -63,7 +63,7 @@ while True:
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_f]:
-        set_stage(stage_atual,scr, altura, largura, layout[1])
+        set_stage(stage_atual,scr, layout[1])
     player.move(keys,stage_atual)
     player.draw(scr)
 

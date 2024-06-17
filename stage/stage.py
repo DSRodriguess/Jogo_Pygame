@@ -1,10 +1,8 @@
 import pygame
 
 class Stage():
-    def __init__(self, scr, altura, largura, stage, tile_size=50):
+    def __init__(self, scr, stage, tile_size=50):
         self.scr = scr
-        self.altura = altura
-        self.largura = largura
         self.stage = stage
         self.tile_size = tile_size
 
@@ -23,8 +21,8 @@ class Stage():
                         return True
         return False
 
-def set_stage(current_stage, scr, altura, largura, novo_layout): #TODO: discutir a implementação, pois envolve mais de uma ação
-        current_stage = Stage(scr, altura, largura, novo_layout)
+def set_stage(current_stage, scr, novo_layout): #TODO: discutir a implementação, pois envolve mais de uma ação
+        current_stage = Stage(scr, novo_layout)
 
 def carregar_layout(filename):
     stage = []
