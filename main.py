@@ -18,7 +18,7 @@ def debugar(objeto):
     pprint(vars(objeto))
 
 pygame.init()
-
+global_count =0
 largura = 1000
 altura = 800
 scr = pygame.display.set_mode((largura,altura))
@@ -129,11 +129,6 @@ while True:
 
     # Mostrar o relógio com o tempo restante na tela
     mostrar_relogio(scr, tempo_restante)
-
-
-    # Funções de verificação de dado 
-
-    mostrar_relogio(scr, pygame.time.get_ticks() - tempo_inicial)
     
     #Colisão boss x Player
     boss.checa_dano_player(player)

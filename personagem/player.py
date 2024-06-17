@@ -40,7 +40,7 @@ class Player(Personagem):
             self.rect.x -= dx
 
         self.rect.y += dy
-        if stage.check_collision(self.rect):
+        if stage.checar_colisao(self.rect):
             self.gravidade = False
             self.pulando = False
             self.pulo = 1
