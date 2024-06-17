@@ -65,11 +65,11 @@ while True:
             exit()
         if ev.type == pygame.KEYDOWN:
             key = pygame.key.name(ev.key)
-            print(key, "tecla Pressionada")
+            # print(key, "tecla Pressionada")
             pressionando = True
         if ev.type == pygame.KEYUP:
             key = pygame.key.name(ev.key)
-            print(key, "tecla Solta")
+            # print(key, "tecla Solta")
             pressionando = False
 
     keys = pygame.key.get_pressed()
@@ -106,30 +106,6 @@ while True:
     player.cair()
 
     #debug
-    debugar(player)
+    # debugar(player)
     
     pygame.display.update()
-
-
-
-
-
-#---------------------------------------------------Tentativa MAP pra gravidade
-    # def gravidade(coisa):
-    #     # if(object.gravidade == True):
-    #     coisa.y += 1
-    #     coisa.rect.y += 1
-    #     coisa.draw(scr)
-    #     return coisa
-
-    # print(map(gravidade,terra))
-    #print(player.y)
-    #Gravidade
-
-    # l = [1,2,3,4]
-    # def dobro(x):
-    #     return x*2
-    # dobrado = (map(dobro,l))
-    # dobrado = list(dobrado)
-    # print(dobrado)
-#---------------------------------------------------Tentativa MAP pra gravidade

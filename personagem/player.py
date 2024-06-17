@@ -15,20 +15,18 @@ class Player(Personagem):
         self.invecivel = False
         self.ultimo_pulo = 0
         self.status =0
-        self.pres = False
         
         self.rect = pygame.Rect(x, y, largura, altura)
 
     def move(self, keys, stage,pres):
         dx, dy = 0, 0
-        self.pres = pres
+        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+            dx = -1.0
+        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+            dx = 1.0
+        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+            dy = 1.0
         if(pres):
-            if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-                dx = -1.0
-            if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-                dx = 1.0
-            if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-                dy = 1.0
             if keys[pygame.K_w] or keys[pygame.K_UP]:
                 # dy = -1.0
                 if(self.pulando == False):
@@ -49,9 +47,6 @@ class Player(Personagem):
             self.pulando = False
             self.pulo = 1
             self.rect.y -= dy+1
-            # self.gravidade = False
-            # self.y -= 1
-            # self.rect.y -= 1
 
         self.x = self.rect.x
         self.y = self.rect.y
@@ -91,11 +86,9 @@ class Player(Personagem):
 
     def pular(self,altura_ultimo_pulo):
         self.pulando = True
-        # self.altura_ultimo_pulo = self.x
-        # if(self.pulando):
         if(altura_ultimo_pulo - self.y < self.limite_pulo):
-            self.y -= 5
-            self.rect.y -= 5
+            self.y -= 3
+            self.rect.y -= 3
         else:
             self.gravidade = True
             self.pulando = True

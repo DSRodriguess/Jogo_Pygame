@@ -27,27 +27,6 @@ class Personagem:
     def pular(self):
         pass
 
-        
-        
-        # # while(self.pulando):
-        # if(self.pulando):
-        #     if(self.altura_ultimo_pulo - self.x < self.limite_pulo):
-        #         if(self.gravidade):
-        #             self.y-=2
-        #             self.rect.y-=2
-        #         else:
-        #             self.pulando = False
-        #     else:
-        #         self.pulando=False
-
-
-
-        # for i in range(self.limite_pulo):
-        #     self.y-= 1
-        #     self.rect.y-= 1
-        #     if(self.gravidade == False):
-        #         break
-
     def cair(self):
         if (self.gravidade == True):
             self.y +=1
