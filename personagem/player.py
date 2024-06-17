@@ -14,27 +14,30 @@ class Player(Personagem):
         self.tempo_invencibilidade = 1000 #1000ms = 1s
         self.invecivel = False
         self.ultimo_pulo = 0
+        self.status =0
+        self.pres = False
         
         self.rect = pygame.Rect(x, y, largura, altura)
 
-    def move(self, keys, stage):
+    def move(self, keys, stage,pres):
         dx, dy = 0, 0
-        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-            dx = -1.0
-        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-            dx = 1.0
-        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-            dy = 1.0
-        if keys[pygame.K_w] or keys[pygame.K_UP]:
-            # dy = -1.0
-            if(self.pulando == False):
-                self.ultimo_pulo = self.y
-
-            if(self.gravidade == False):
-                self.pular(self.ultimo_pulo)
-
-
-        # self.gravidade = True
+        self.pres = pres
+        if(pres):
+            if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+                dx = -1.0
+            if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+                dx = 1.0
+            if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+                dy = 1.0
+            if keys[pygame.K_w] or keys[pygame.K_UP]:
+                # dy = -1.0
+                if(self.pulando == False):
+                    self.ultimo_pulo = self.y
+                    self.pulando = True
+                if(self.gravidade == False):
+                    self.pular(self.ultimo_pulo)
+        else:
+            self.gravidade = True
 
         self.rect.x += dx
         if stage.check_collision(self.rect):
@@ -91,8 +94,8 @@ class Player(Personagem):
         # self.altura_ultimo_pulo = self.x
         # if(self.pulando):
         if(altura_ultimo_pulo - self.y < self.limite_pulo):
-            self.y -= 3
-            self.rect.y -= 3
+            self.y -= 5
+            self.rect.y -= 5
         else:
             self.gravidade = True
             self.pulando = True

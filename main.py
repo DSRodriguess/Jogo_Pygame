@@ -20,6 +20,7 @@ def debugar(objeto):
 
 pygame.init()
 
+
 #Definições da tela
 largura = 1000
 altura = 800
@@ -51,7 +52,7 @@ def mostrar_relogio(scr, tempo_decorrido):
     scr.blit(text, text_rect)
 
 terra =[player]
-
+pressionando = False
 while True:
     scr.fill((255,255,255)) 
     stage.draw()
@@ -65,13 +66,14 @@ while True:
         if ev.type == pygame.KEYDOWN:
             key = pygame.key.name(ev.key)
             print(key, "tecla Pressionada")
+            pressionando = True
         if ev.type == pygame.KEYUP:
             key = pygame.key.name(ev.key)
             print(key, "tecla Solta")
-
+            pressionando = False
 
     keys = pygame.key.get_pressed()
-    player.move(keys,stage)
+    player.move(keys,stage,pressionando)
     player.draw(scr)
 
     if boss_vivo:
