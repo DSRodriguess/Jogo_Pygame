@@ -9,6 +9,7 @@ from stage import *
 from personagem.ataque import Ataque
 import random
 
+
 pygame.init()
 
 # Definoções da tela
@@ -57,7 +58,7 @@ def mostrar_moedas(scr, moedas):
     text = font.render(f"Moedas: {moedas}", 1, (10, 10, 10))
     scr.blit(text, (10, 50))
 
-# Função para mostrar o relógio na tela com 120 segundos 
+# Função para mostrar o relógio na tela
 def mostrar_relogio(scr, tempo_decorrido):
     font = pygame.font.Font(None, 36) 
     segundos = tempo_decorrido // 1000
@@ -134,6 +135,7 @@ while True:
         ataque.draw(scr)
         if ataque.checar_colisao(player):
             player.take_damage(1)
+            player.recuar(75,ataque.x,ataque.y)
             ataques.remove(ataque)
         elif ataque.y > altura:
             ataques.remove(ataque)
