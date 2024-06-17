@@ -6,7 +6,6 @@ class Player(Personagem):
     def __init__(self, x, y, largura, altura, cor, vida=3):
         super().__init__(x, y, largura, altura, cor, vida)
         self.vidas_iniciais = vida
-
         self.moedas = 0 
 
         #Dano boss no player
@@ -15,7 +14,6 @@ class Player(Personagem):
         self.invecivel = False
         self.ultimo_pulo = 0
         self.status =0
-        
         self.rect = pygame.Rect(x, y, largura, altura)
 
     def move(self, keys, stage,pres):
