@@ -4,10 +4,9 @@ from sys import exit
 from personagem.personagem import Personagem
 from personagem.player import Player
 from personagem.boss import Boss
-from arma.arma import Arma
 from arma.escopeta import Escopeta
 from arma.disco import Disco
-from stage import *
+from stage.stage import *
 
 pygame.init()
 
@@ -18,7 +17,13 @@ global_count = 0
 scr = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("EDL GAME")
 
-stage = stage(scr, altura, largura)
+tile_size = 50
+layout = [
+        carregar_layout("./stage/layout1.txt"),
+        carregar_layout("./stage/layout2.txt")
+        ]
+
+stage_atual = Stage(scr, layout[1])
 
 player = Player(150, 650, 50, 50, (0, 0, 255), 3)
 
@@ -43,7 +48,7 @@ def mostrar_relogio(scr, tempo_decorrido):
 
 while True:
     scr.fill((255,255,255)) 
-    stage.draw()
+    stage_atual.draw()
     grids(scr,altura,largura)
 
     for ev in pygame.event.get():
@@ -53,12 +58,13 @@ while True:
             exit()
         if ev.type == pygame.KEYDOWN:
             key = pygame.key.name(ev.key)
-            print(key, "tecla Pressionada")
-
+            print("pressed", key)
 
 
     keys = pygame.key.get_pressed()
-    player.move(keys,stage)
+    if keys[pygame.K_f]:
+        set_stage(stage_atual,scr, layout[1])
+    player.move(keys,stage_atual)
     player.draw(scr)
 
     if boss_vivo:
