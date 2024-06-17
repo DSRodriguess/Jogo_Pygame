@@ -7,10 +7,18 @@ from personagem.boss import Boss
 from arma.escopeta import Escopeta
 from arma.disco import Disco
 from stage.stage import *
+from pprint import pprint
+import os
+
+#Funcao debug, coloque a classe e suas variáveis serão printadas
+#Deixa o jogo mais lento
+def debugar(objeto):
+    os.system('clear')
+    pprint(vars(objeto))
 
 pygame.init()
 
-#Definoções da tela
+#Definições da tela
 largura = 1000
 altura = 800
 global_count = 0
@@ -25,7 +33,7 @@ layout = [
 
 stage_atual = Stage(scr, layout[1])
 
-player = Player(150, 650, 50, 50, (0, 0, 255), 3)
+player = Player(150, 500, 50, 50, (0, 0, 255), 3)
 
 boss_vivo = True
 boss = Boss(780, 600, 100, 100, (150, 75, 0), 100)
@@ -46,6 +54,8 @@ def mostrar_relogio(scr, tempo_decorrido):
     text_rect.topright = (largura - 10, 10)  
     scr.blit(text, text_rect)
 
+terra =[player]
+pressionando = False
 while True:
     scr.fill((255,255,255)) 
     stage_atual.draw()
@@ -58,13 +68,15 @@ while True:
             exit()
         if ev.type == pygame.KEYDOWN:
             key = pygame.key.name(ev.key)
-            print("pressed", key)
-
+            # print(key, "tecla Pressionada")
+            pressionando = True
+        if ev.type == pygame.KEYUP:
+            key = pygame.key.name(ev.key)
+            # print(key, "tecla Solta")
+            pressionando = False
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_f]:
-        set_stage(stage_atual,scr, layout[1])
-    player.move(keys,stage_atual)
+    player.move(keys,stage_atual,pressionando)
     player.draw(scr)
 
     if boss_vivo:
@@ -84,9 +96,19 @@ while True:
 
 
     mostrar_relogio(scr, pygame.time.get_ticks() - tempo_inicial)
+    
+    #Colisão boss x Player
     boss.checa_dano_player(player)
     player.reseta_invencibilidade()
+
+    #Posicao central player e boss
     player.atualiza_centro()
     boss.atualiza_centro()
 
+    #Gravidade no player
+    player.cair()
+
+    #debug
+    # debugar(player)
+    
     pygame.display.update()

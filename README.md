@@ -17,10 +17,8 @@
     1. Tiago - Confecção Tela e fundos do Jogo
     2. David - Desenvolvimento Personagens
     3. Alexandre - Desenvolvimento Armas e Eventos
-    
-#### Apresentações
 
-[Apresentação 1](https://docs.google.com/presentation/d/1C6HZsTGSgbM1eXTBr5OfzTL8NW4UrfCZ3oVO632PLdQ/edit?usp=sharing)
+#### Alexandre
 
-[Apresentação 2](https://docs.google.com/presentation/d/1gv9BB-pc5wn2GNtmW34Bkv9aB0fPslBh86iQmRl6d6k/edit?usp=sharing)
+    1. 
 
