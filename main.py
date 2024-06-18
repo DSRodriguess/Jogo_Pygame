@@ -3,8 +3,8 @@ from pygame.locals import *
 from sys import exit
 from personagem.player import Player
 from personagem.boss import Boss
-from arma.escopeta import Escopeta
 from arma.pistola import Pistola
+from arma.escopeta import Escopeta
 from arma.metralhadora import Metralhadora
 from arma.disco import Disco
 from arma.chamas import Chamas
@@ -13,6 +13,10 @@ from stage.stage import *
 from pprint import pprint
 from chapeu.chapeu import Chapeu
 from chapeu.cowboy import Cowboy
+from chapeu.ninja import Ninja
+from chapeu.nurse import Nurse
+from chapeu.russo import Russo
+from chapeu.mugi import Mugi
 import os
 import random
 
@@ -49,7 +53,7 @@ gun = Pistola(player.x,player.y)
 # gun = Metralhadora(player.x,player.y)
 # gun = Disco(player.x,player.y)
 # gun = Chamas(player.x,player.y)
-hat = Cowboy(player.x,player.y)
+hat = Mugi(player.x,player.y)
 player.chapeu = hat
 
 # Tempo inicial
@@ -125,10 +129,11 @@ while True:
     
     # Atualizacao posicao arma com o personagem
     gun.x = player.x
-    gun.y = player.y
+    gun.y = player.y 
 
-    hat.x = player.x
-    hat.y = player.y
+    if(player.chapeu):
+        hat.x = player.x
+        hat.y = player.y
 
     # Atualização tiros na tela e checagem de colisões
     gun.redesenha_tiro(scr, boss)
