@@ -6,7 +6,7 @@ class Disco(Arma):
     def __init__(self,x,y):
         super().__init__(x,y)
         self.cor = (255,165,0)
-        self.velocidade = 1.2
+        self.velocidade = 4
         self.dano = 5
         self.alcance = 300 
         self.intervalo = 500

@@ -14,9 +14,12 @@ class Personagem:
         self.limite_pulo = 150
         self.pulando = False
         self.altura_ultimo_pulo = 0
+        self.chapeu = False
 
     def draw(self, scr):
         pygame.draw.rect(scr, self.cor, (self.x, self.y, self.largura, self.altura))
+        if(self.chapeu):
+            self.chapeu.desenha_chapeu(scr)
 
     def take_damage(self, amount):
         pass

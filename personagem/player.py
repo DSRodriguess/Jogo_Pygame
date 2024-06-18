@@ -63,11 +63,14 @@ class Player(Personagem):
             self.invencivel = False
 
     def take_damage(self, amount):
+        self.chapeu = 0
         if (self.invecivel == False):
             self.vida -= amount
             self.invencivel = True
         if (self.vida < 0):
             print("Game Over")
+            pygame.quit()
+            exit()
 
     def recuar(self,distancia,x_boss,y_boss):
         if(self.x < x_boss):

@@ -4,10 +4,15 @@ from sys import exit
 from personagem.player import Player
 from personagem.boss import Boss
 from arma.escopeta import Escopeta
+from arma.pistola import Pistola
+from arma.metralhadora import Metralhadora
 from arma.disco import Disco
+from arma.chamas import Chamas
 from personagem.ataque import Ataque
 from stage.stage import *
 from pprint import pprint
+from chapeu.chapeu import Chapeu
+from chapeu.cowboy import Cowboy
 import os
 import random
 
@@ -39,8 +44,13 @@ boss_vivo = True
 # Cria o Boss passando (posição,tamanho, cor e vidas)
 boss = Boss(780, 600, 100, 100, (150, 75, 0), 100)
 
-gun = Escopeta(player.x,player.y)
+gun = Pistola(player.x,player.y)
+# gun = Escopeta(player.x,player. y)
+# gun = Metralhadora(player.x,player.y)
 # gun = Disco(player.x,player.y)
+# gun = Chamas(player.x,player.y)
+hat = Cowboy(player.x,player.y)
+player.chapeu = hat
 
 # Tempo inicial
 tempo_inicial = pygame.time.get_ticks()
@@ -57,9 +67,9 @@ calcula_gold_total = lambda tempo, vidas: max(0, (moedas_iniciais - max(0, tempo
 # Lista para armazenar os ataques
 ataques = []
 
-# Temporizador para ataques
+# Temporizador para ataques   
 tempo_ultimo_ataque = pygame.time.get_ticks()
-intervalo_ataques = 2000  # 2 segundos
+intervalo_ataques = 700  # 2 segundos
 
 # Função para mostrar as moedas na tela
 def mostrar_moedas(scr, moedas):
@@ -93,8 +103,8 @@ while True:
         if ev.type == pygame.KEYDOWN:
             key = pygame.key.name(ev.key)
             # print(key, "tecla Pressionada")
-            pressionando = True
-        if ev.type == pygame.KEYUP:
+            pressionando = True 
+        if ev.type == pygame.KEYUP: 
             key = pygame.key.name(ev.key)
             # print(key, "tecla Solta")
             pressionando = False
@@ -116,6 +126,9 @@ while True:
     # Atualizacao posicao arma com o personagem
     gun.x = player.x
     gun.y = player.y
+
+    hat.x = player.x
+    hat.y = player.y
 
     # Atualização tiros na tela e checagem de colisões
     gun.redesenha_tiro(scr, boss)
@@ -146,10 +159,12 @@ while True:
         player.moedas += gold_total
         
     # Gerar novos ataques
-    if pygame.time.get_ticks() - tempo_ultimo_ataque > intervalo_ataques:
-        ataques.append(Ataque(largura, altura, player))
-        tempo_ultimo_ataque = pygame.time.get_ticks()
-
+    if(boss_vivo):
+        if pygame.time.get_ticks() - tempo_ultimo_ataque > intervalo_ataques:
+            ataques.append(Ataque(largura, altura, player))
+            tempo_ultimo_ataque = pygame.time.get_ticks()
+    
+ 
     # Atualizar e desenhar ataques
     for ataque in ataques[:]:
         ataque.update()

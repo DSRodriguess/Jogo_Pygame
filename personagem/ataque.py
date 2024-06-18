@@ -8,7 +8,7 @@ class Ataque:
         self.largura = 30
         self.altura = 30
         self.color = (150, 75, 0)
-        self.velocidade = 2
+        self.velocidade = 8
         self.x = random.randint(player.x - 50, player.x + 50) # Ataque começa aleatoriamente na posição do player
         self.y = -self.altura
 
