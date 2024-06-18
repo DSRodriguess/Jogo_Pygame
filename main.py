@@ -48,13 +48,21 @@ boss_vivo = True
 # Cria o Boss passando (posição,tamanho, cor e vidas)
 boss = Boss(780, 600, 100, 100, (150, 75, 0), 100)
 
-gun = Pistola(player.x,player.y)
+# gun = Pistola(player.x,player.y)
 # gun = Escopeta(player.x,player. y)
 # gun = Metralhadora(player.x,player.y)
 # gun = Disco(player.x,player.y)
-# gun = Chamas(player.x,player.y)
-hat = Mugi(player.x,player.y)
-player.chapeu = hat
+gun = Chamas(player.x,player.y)
+
+hat=0
+# hat = Cowboy(player.x,player.y)
+# hat = Ninja(player.x,player.y)
+# hat = Nurse(player.x,player.y)
+# hat = Russo(player.x,player.y)
+# hat = Mugi(player.x,player.y)
+
+if(hat):
+    player.chapeu = hat
 
 # Tempo inicial
 tempo_inicial = pygame.time.get_ticks()
