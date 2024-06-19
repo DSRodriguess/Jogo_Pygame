@@ -8,6 +8,8 @@ from arma.disco import Disco
 from stage.stage import *
 from ataques.estalactite import Estalactite 
 from ataques.pilar import PilarDeFogo
+from display_utils.moedas import mostrar_moedas
+from display_utils.relogio import mostrar_relogio
 from pprint import pprint
 import os
 import random
@@ -62,22 +64,6 @@ ataques = []
 tempo_ultimo_ataque = pygame.time.get_ticks()
 intervalo_ataques = 1000  # 2 segundos
 
-# Função para mostrar as moedas na tela
-def mostrar_moedas(scr, moedas):
-    font = pygame.font.Font(None, 36)
-    text = font.render(f"Moedas: {moedas}", 1, (10, 10, 10))
-    scr.blit(text, (10, 50))
-
-# Função para mostrar o relógio na tela
-def mostrar_relogio(scr, tempo_decorrido):
-    font = pygame.font.Font(None, 36) 
-    segundos = tempo_decorrido // 1000
-    minutos = segundos // 60
-    tempo_formatado = "{:02d}:{:02d}".format(minutos % 60, segundos % 60)
-    text = font.render(f"Tempo: {tempo_formatado}", 1, (10, 10, 10))
-    text_rect = text.get_rect()
-    text_rect.topright = (largura - 10, 10)  
-    scr.blit(text, text_rect)
 
 terra =[player]
 pressionando = False
@@ -129,7 +115,7 @@ while True:
     mostrar_moedas(scr, player.moedas)
 
     # Mostrar o relógio com o tempo restante na tela
-    mostrar_relogio(scr, tempo_restante)
+    mostrar_relogio(scr, tempo_restante, largura)
     
     #Colisão boss x Player
     boss.checa_dano_player(player)
