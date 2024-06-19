@@ -3,16 +3,16 @@ import random
 from .ataque import Ataque
 from pygame.locals import *
 
-
-class Estalactite(Ataque):
+class PilarDeFogo(Ataque):
     def __init__(self, player):
-        x = player.x + random.randint(-50, 50)
+        x = 0
         y = 0
         largura = 20
-        altura = 20
-        cor = (150, 75, 0) 
+        altura = 0
+        cor = (255, 0, 0) 
         super().__init__(x, y, largura, altura, cor)
         self.velocidade = 5
+        self.altura_maxima = 100  # Altura máxima do pilar
 
     def update(self):
         self.y += self.velocidade

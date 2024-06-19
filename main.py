@@ -7,6 +7,7 @@ from arma.escopeta import Escopeta
 from arma.disco import Disco
 from stage.stage import *
 from ataques.estalactite import Estalactite 
+from ataques.pilar import PilarDeFogo
 from pprint import pprint
 import os
 import random
@@ -147,7 +148,8 @@ while True:
         
     # Gerar novos ataques
     if pygame.time.get_ticks() - tempo_ultimo_ataque > intervalo_ataques:
-        ataques.append(Estalactite(largura, altura, player))
+        ataques.append(Estalactite(player))
+        #ataques.append(PilarDeFogo(player))
         tempo_ultimo_ataque = pygame.time.get_ticks()
 
     # Atualizar e desenhar ataques
