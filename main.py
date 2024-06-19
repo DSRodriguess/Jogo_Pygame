@@ -5,8 +5,8 @@ from personagem.player import Player
 from personagem.boss import Boss
 from arma.escopeta import Escopeta
 from arma.disco import Disco
-from personagem.ataque import Ataque
 from stage.stage import *
+from ataques.estalactite import Estalactite 
 from pprint import pprint
 import os
 import random
@@ -59,7 +59,7 @@ ataques = []
 
 # Temporizador para ataques
 tempo_ultimo_ataque = pygame.time.get_ticks()
-intervalo_ataques = 2000  # 2 segundos
+intervalo_ataques = 1000  # 2 segundos
 
 # Função para mostrar as moedas na tela
 def mostrar_moedas(scr, moedas):
@@ -147,7 +147,7 @@ while True:
         
     # Gerar novos ataques
     if pygame.time.get_ticks() - tempo_ultimo_ataque > intervalo_ataques:
-        ataques.append(Ataque(largura, altura, player))
+        ataques.append(Estalactite(largura, altura, player))
         tempo_ultimo_ataque = pygame.time.get_ticks()
 
     # Atualizar e desenhar ataques
