@@ -62,7 +62,11 @@ ataques = []
 
 # Temporizador para ataques
 tempo_ultimo_ataque = pygame.time.get_ticks()
-intervalo_ataques = 1000  # 2 segundos
+intervalo_ataques = 2000 
+
+# Define a taxa de quadros
+clock = pygame.time.Clock()
+fps = 60
 
 
 terra =[player]
@@ -134,8 +138,8 @@ while True:
         
     # Gerar novos ataques
     if pygame.time.get_ticks() - tempo_ultimo_ataque > intervalo_ataques:
-        ataques.append(Estalactite(player))
-        #ataques.append(PilarDeFogo(player))
+        #ataques.append(Estalactite(player))
+        ataques.append(PilarDeFogo(player))
         tempo_ultimo_ataque = pygame.time.get_ticks()
 
     # Atualizar e desenhar ataques
@@ -146,7 +150,8 @@ while True:
             player.take_damage(1)
             player.recuar(75,ataque.x,ataque.y)
             ataques.remove(ataque)
-        elif ataque.y > altura:
+        #elif ataque.y > altura:
+        elif ataque.y + ataque.altura < 0:
             ataques.remove(ataque)
 
     #Gravidade no player
@@ -154,5 +159,6 @@ while True:
 
     #debug
     # debugar(player)
-    
+
     pygame.display.update()
+    clock.tick(fps)
