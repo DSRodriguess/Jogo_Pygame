@@ -9,7 +9,7 @@ class PilarDeFogo(Ataque):
         altura = 50
         cor = (0, 255, 0)  
         x = player.x + random.randint(-player.largura // 2, player.largura // 2)
-        y = player.y + player.altura  
+        y = 750
         super().__init__(x, y, largura, altura, cor)
         self.velocidade_subida = 0.5
 

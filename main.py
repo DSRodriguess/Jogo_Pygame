@@ -66,7 +66,7 @@ intervalo_ataques = 2000
 
 # Define a taxa de quadros
 clock = pygame.time.Clock()
-fps = 60
+#fps = 60
 
 
 terra =[player]
@@ -151,7 +151,7 @@ while True:
             player.recuar(75,ataque.x,ataque.y)
             ataques.remove(ataque)
         #elif ataque.y > altura:
-        elif ataque.y + ataque.altura < 0:
+        elif ataque.y < 100:
             ataques.remove(ataque)
 
     #Gravidade no player
@@ -161,4 +161,4 @@ while True:
     # debugar(player)
 
     pygame.display.update()
-    clock.tick(fps)
+    #clock.tick(fps)
