@@ -2,7 +2,6 @@ import pygame
 from pygame.locals import *
 from sys import exit
 from personagem.player import Player
-from personagem.boss import Boss
 from personagem.terra_boss import TerraBoss
 from personagem.fogo_boss import FogoBoss
 from personagem.caos_boss import CaosBoss
@@ -17,36 +16,59 @@ from pprint import pprint
 import os
 import random
 
-#Funcao debug, coloque a classe e suas variáveis serão printadas
-#Deixa o jogo mais lento
+# Funcao debug, coloque a classe e suas variáveis serão printadas
+# Deixa o jogo mais lento
 def debugar(objeto):
     os.system('clear')
     pprint(vars(objeto))
 
+def tela_inicial(scr, largura, altura):
+    fonte = pygame.font.SysFont(None, 74)
+    texto_titulo = fonte.render('Jogo EDL', True, (255, 255, 255))
+    texto_comecar = fonte.render('Pressione Enter para começar', True, (255, 255, 255))
+
+    rodando = True
+    while rodando:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    rodando = False
+
+        scr.fill((0, 0, 0))
+        scr.blit(texto_titulo, ((largura - texto_titulo.get_width()) // 2, altura // 3))
+        scr.blit(texto_comecar, ((largura - texto_comecar.get_width()) // 2, altura // 2))
+
+        pygame.display.update()
+
 pygame.init()
-global_count =0
+global_count = 0
 largura = 1000
 altura = 800
-scr = pygame.display.set_mode((largura,altura))
+scr = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("EDL GAME")
+
+tela_inicial(scr, largura, altura)
 
 tile_size = 50
 layout = [
-        carregar_layout("./stage/layout1.txt"),
-        carregar_layout("./stage/layout2.txt")
-        ]
+    carregar_layout("./stage/layout1.txt"),
+    carregar_layout("./stage/layout2.txt")
+]
 
 stage_atual = Stage(scr, layout[1])
 
-# Cria o personagem passando (posição,tamanho, cor e vidas)
+# Cria o personagem passando (posição, tamanho, cor e vidas)
 player = Player(150, 500, 50, 50, (0, 0, 255), 3)
 
 boss_vivo = True
-# Cria o Boss passando (posição,tamanho, cor e vidas)
+# Cria o Boss (escolha um dos Bosses: TerraBoss, FogoBoss, CaosBoss)
 boss = CaosBoss(780, 600)
 
-gun = Escopeta(player.x,player.y)
-# gun = Disco(player.x,player.y)
+gun = Escopeta(player.x, player.y)
+# gun = Disco(player.x, player.y)
 
 # Tempo inicial
 tempo_inicial = pygame.time.get_ticks()
@@ -69,18 +91,16 @@ intervalo_ataques = 2000
 
 # Define a taxa de quadros
 clock = pygame.time.Clock()
-#fps = 60
+# fps = 60
 
-
-terra =[player]
+terra = [player]
 pressionando = False
 while True:
-    scr.fill((255,255,255)) 
+    scr.fill((255, 255, 255)) 
     stage_atual.draw()
-    grids(scr,altura,largura)
+    grids(scr, altura, largura)
 
     for ev in pygame.event.get():
-
         if ev.type == pygame.QUIT:
             pygame.quit()
             exit()
@@ -94,7 +114,7 @@ while True:
             pressionando = False
 
     keys = pygame.key.get_pressed()
-    player.move(keys,stage_atual,pressionando)
+    player.move(keys, stage_atual, pressionando)
     player.draw(scr)
 
     tempo_decorrido = pygame.time.get_ticks() - tempo_inicial
@@ -106,7 +126,6 @@ while True:
     if tempo_restante <= 0:
         print("Tempo esgotado! Fim de jogo.")
 
-    
     # Atualizacao posicao arma com o personagem
     gun.x = player.x
     gun.y = player.y
@@ -115,7 +134,7 @@ while True:
     gun.redesenha_tiro(scr, boss)
 
     # Eventos e Desenho da arma
-    gun.event(keys,scr,global_count)
+    gun.event(keys, scr, global_count)
     gun.draw(scr)
 
     # Mostrar as moedas na tela
@@ -124,11 +143,11 @@ while True:
     # Mostrar o relógio com o tempo restante na tela
     mostrar_relogio(scr, tempo_restante, largura)
     
-    #Colisão boss x Player
+    # Colisão boss x Player
     boss.checa_dano_player(player)
     player.reseta_invencibilidade()
 
-    #Posicao central player e boss
+    # Posicao central player e boss
     player.atualiza_centro()
     boss.atualiza_centro()
     
@@ -158,11 +177,11 @@ while True:
             elif isinstance(ataque, PilarDeFogo) and ataque.y + ataque.altura < 100:
                 ataques.remove(ataque)
 
-    #Gravidade no player
+    # Gravidade no player
     player.cair()
 
-    #debug
+    # debug
     # debugar(player)
 
     pygame.display.update()
-    #clock.tick(fps)
+    # clock.tick(fps)
