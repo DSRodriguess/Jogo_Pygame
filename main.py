@@ -3,6 +3,9 @@ from pygame.locals import *
 from sys import exit
 from personagem.player import Player
 from personagem.boss import Boss
+from personagem.terra_boss import TerraBoss
+from personagem.fogo_boss import FogoBoss
+from personagem.caos_boss import CaosBoss
 from arma.escopeta import Escopeta
 from arma.disco import Disco
 from stage.stage import *
@@ -40,7 +43,7 @@ player = Player(150, 500, 50, 50, (0, 0, 255), 3)
 
 boss_vivo = True
 # Cria o Boss passando (posição,tamanho, cor e vidas)
-boss = Boss(780, 600, 100, 100, (150, 75, 0), 100)
+boss = CaosBoss(780, 600)
 
 gun = Escopeta(player.x,player.y)
 # gun = Disco(player.x,player.y)
@@ -138,8 +141,7 @@ while True:
         
     # Gerar novos ataques
     if pygame.time.get_ticks() - tempo_ultimo_ataque > intervalo_ataques:
-        #ataques.append(Estalactite(player))
-        ataques.append(PilarDeFogo(player))
+        boss.atacar(ataques, player)
         tempo_ultimo_ataque = pygame.time.get_ticks()
 
     # Atualizar e desenhar ataques
@@ -148,11 +150,13 @@ while True:
         ataque.draw(scr)
         if ataque.checar_colisao(player):
             player.take_damage(1)
-            player.recuar(75,ataque.x,ataque.y)
+            player.recuar(75, ataque.x, ataque.y)
             ataques.remove(ataque)
-        #elif ataque.y > altura:
-        elif ataque.y < 100:
-            ataques.remove(ataque)
+        else:
+            if isinstance(ataque, Estalactite) and ataque.y > altura:
+                ataques.remove(ataque)
+            elif isinstance(ataque, PilarDeFogo) and ataque.y + ataque.altura < 100:
+                ataques.remove(ataque)
 
     #Gravidade no player
     player.cair()
