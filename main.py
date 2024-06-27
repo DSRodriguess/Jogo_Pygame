@@ -4,7 +4,7 @@ from sys import exit
 from pprint import pprint
 import os
 
-#------------------------------------Player------------------------------------
+#------------------------------------Player----------------------------------
 from personagem.player import Player
 
 from chapeu.chapeu import Chapeu
@@ -13,7 +13,8 @@ from chapeu.ninja import Ninja
 from chapeu.nurse import Nurse
 from chapeu.russo import Russo
 from chapeu.mugi import Mugi
-#------------------------------------Armas------------------------------------
+
+#------------------------------------Armas-----------------------------------
 from arma.pistola import Pistola
 from arma.escopeta import Escopeta
 from arma.metralhadora import Metralhadora
@@ -22,7 +23,7 @@ from arma.chamas import Chamas
 #------------------------------------Boss------------------------------------
 from personagem.boss import Boss
 from personagem.ataque import Ataque
-#------------------------------------Cenario------------------------------------
+#------------------------------------Cenario---------------------------------
 from stage.stage import *
 
 
