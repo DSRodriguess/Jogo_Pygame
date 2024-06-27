@@ -25,7 +25,7 @@ from arma.disco import Disco
 from arma.chamas import Chamas
 #------------------------------------Boss------------------------------------
 from personagem.boss import Boss
-from personagem.ataque import Ataque
+# from personagem.ataque import Ataque
 #------------------------------------Cenario---------------------------------
 from stage.stage import *
 from ataques.estalactite import Estalactite 
@@ -88,16 +88,16 @@ boss_vivo = True
 # Cria o Boss (escolha um dos Bosses: TerraBoss, FogoBoss, CaosBoss)
 boss = TerraBoss(780, 600)
 
-gun = Pistola(player.x,player.y)
+# gun = Pistola(player.x,player.y)
 # gun = Escopeta(player.x,player. y )
 # gun = Metralhadora(player.x, player.y)
 # gun = Disco(player.x, player.y)
-# gun = Chamas(player.x,player.y)
+gun = Chamas(player.x,player.y)
 
 hat=0
-hat = Cowboy(player.x,player.y)
+# hat = Cowboy(player.x,player.y)
 # hat = Ninja(player.x,player.y)
-# hat = Nurse(player.x,player.y)
+hat = Nurse(player.x,player.y)
 # hat = Russo(player.x,player.y)
 # hat = Mugi(player.x,player.y)
 
@@ -204,26 +204,21 @@ while True:
     if (tempo_restante <= 0 or player.vida <=0):
         game_over(scr, largura, altura,pontuacao)
 
-
-    if(boss_vivo):
-        if pygame.time.get_ticks() - tempo_ultimo_ataque > intervalo_ataques:
-            ataques.append(Ataque(largura, altura, player))
-            tempo_ultimo_ataque = pygame.time.get_ticks()
-    
  
     # Atualizar e desenhar ataques
-    for ataque in ataques[:]:
-        ataque.update()
-        ataque.draw(scr)
-        if ataque.checar_colisao(player):
-            player.take_damage(1)
-            player.recuar(75, ataque.x, ataque.y)
-            ataques.remove(ataque)
-        else:
-            if isinstance(ataque, Estalactite) and ataque.y > altura:
+    if(boss_vivo):
+        for ataque in ataques[:]:
+            ataque.update()
+            ataque.draw(scr)
+            if ataque.checar_colisao(player):
+                player.take_damage(1)
+                player.recuar(75, ataque.x, ataque.y)
                 ataques.remove(ataque)
-            elif isinstance(ataque, PilarDeFogo) and ataque.y + ataque.altura < 100:
-                ataques.remove(ataque)
+            else:
+                if isinstance(ataque, Estalactite) and ataque.y > altura:
+                    ataques.remove(ataque)
+                elif isinstance(ataque, PilarDeFogo) and ataque.y + ataque.altura < 100:
+                    ataques.remove(ataque)
 
     # Gravidade no player
     player.cair()
