@@ -165,6 +165,7 @@ while True:
         hat.x = player.x
         hat.y = player.y
 
+
     # Atualização tiros na tela e checagem de colisões
     gun.redesenha_tiro(scr, boss)
 
