@@ -1,24 +1,30 @@
 import pygame
 from pygame.locals import *
 from sys import exit
-from personagem.player import Player
-from personagem.boss import Boss
-from arma.pistola import Pistola
-from arma.escopeta import Escopeta
-from arma.metralhadora import Metralhadora
-from arma.disco import Disco
-from arma.chamas import Chamas
-from personagem.ataque import Ataque
-from stage.stage import *
 from pprint import pprint
+import os
+
+#------------------------------------Player------------------------------------
+from personagem.player import Player
+
 from chapeu.chapeu import Chapeu
 from chapeu.cowboy import Cowboy
 from chapeu.ninja import Ninja
 from chapeu.nurse import Nurse
 from chapeu.russo import Russo
 from chapeu.mugi import Mugi
-import os
-import random
+#------------------------------------Armas------------------------------------
+from arma.pistola import Pistola
+from arma.escopeta import Escopeta
+from arma.metralhadora import Metralhadora
+from arma.disco import Disco
+from arma.chamas import Chamas
+#------------------------------------Boss------------------------------------
+from personagem.boss import Boss
+from personagem.ataque import Ataque
+#------------------------------------Cenario------------------------------------
+from stage.stage import *
+
 
 #Funcao debug, coloque a classe e suas variáveis serão printadas
 #Deixa o jogo mais lento
