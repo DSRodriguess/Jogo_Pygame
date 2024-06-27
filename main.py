@@ -35,7 +35,6 @@ from display_utils.relogio import mostrar_relogio
 from display_utils.game_over import game_over
 from display_utils.vitoria import vitoria
 
-
 # Funcao debug, coloque a classe e suas variáveis serão printadas
 # Deixa o jogo mais lento
 def debugar(objeto):
@@ -63,15 +62,56 @@ def tela_inicial(scr, largura, altura):
 
         pygame.display.update()
 
+def reset_turn():
+    global player, boss, gun, hat, boss_vivo, tempo_inicial, moedas_iniciais, ataques, tempo_ultimo_ataque, pontuacao
+
+    # Cria o personagem passando (posição, tamanho, cor e vidas)
+    player = Player(150, 500, 50, 50, (0, 0, 255), 3)
+    
+    boss_vivo = True
+    # Cria o Boss (escolha um dos Bosses: TerraBoss, FogoBoss, CaosBoss)
+    boss = TerraBoss(780, 600)
+    
+    # gun = Pistola(player.x,player.y)
+    # gun = Escopeta(player.x,player.y)
+    # gun = Metralhadora(player.x, player.y)
+    # gun = Disco(player.x, player.y)
+    gun = Chamas(player.x, player.y)
+    
+    hat = 0
+    # hat = Cowboy(player.x, player.y)
+    # hat = Ninja(player.x, player.y)
+    hat = Nurse(player.x, player.y)
+    # hat = Russo(player.x, player.y)
+    # hat = Mugi(player.x, player.y)
+    
+    if hat:
+        player.chapeu = hat
+    
+    # Tempo inicial
+    tempo_inicial = pygame.time.get_ticks()
+    
+    # Moedas iniciais
+    moedas_iniciais = 100
+    
+    # Lista para armazenar os ataques
+    ataques = []
+    
+    # Temporizador para ataques
+    tempo_ultimo_ataque = pygame.time.get_ticks()
+    
+    # Pontuação inicial
+    pontuacao = 0
+
 pygame.init()
 global_count = 0
 largura = 1000
 altura = 800
 scr = pygame.display.set_mode((largura, altura))
-pontuacao = 0
 pygame.display.set_caption("EDL GAME")
 
 tela_inicial(scr, largura, altura)
+reset_turn()
 
 tile_size = 50
 layout = [
@@ -81,53 +121,10 @@ layout = [
 
 stage_atual = Stage(scr, layout[1])
 
-# Cria o personagem passando (posição, tamanho, cor e vidas)
-player = Player(150, 500, 50, 50, (0, 0, 255), 3)
-  
-boss_vivo = True 
-# Cria o Boss (escolha um dos Bosses: TerraBoss, FogoBoss, CaosBoss)
-boss = TerraBoss(780, 600)
-
-# gun = Pistola(player.x,player.y)
-# gun = Escopeta(player.x,player. y )
-# gun = Metralhadora(player.x, player.y)
-# gun = Disco(player.x, player.y)
-gun = Chamas(player.x,player.y)
-
-hat=0
-# hat = Cowboy(player.x,player.y)
-# hat = Ninja(player.x,player.y)
-hat = Nurse(player.x,player.y)
-# hat = Russo(player.x,player.y)
-# hat = Mugi(player.x,player.y)
-
-if(hat):
-    player.chapeu = hat
-
-# Tempo inicial
-tempo_inicial = pygame.time.get_ticks()
-
-# Moedas iniciais
-moedas_iniciais = 100
-
-# Tempo máximo em milissegundos (120 segundos)
-tempo_maximo = 120 * 1000
-
-# Função lambda para calcular o gold total
-calcula_gold_total = lambda tempo, vidas: max(0, (moedas_iniciais - max(0, tempo - 20))) * vidas
-
-# Lista para armazenar os ataques
-ataques = []
-
-# Temporizador para ataques   
-tempo_ultimo_ataque = pygame.time.get_ticks()
-intervalo_ataques = 700 
-
 # Define a taxa de quadros
 clock = pygame.time.Clock()
 # fps = 60
 
-terra = [player]
 pressionando = False
 while True:
     scr.fill((255, 255, 255)) 
@@ -141,8 +138,8 @@ while True:
         if ev.type == pygame.KEYDOWN:
             key = pygame.key.name(ev.key)
             # print(key, "tecla Pressionada")
-            pressionando = True 
-        if ev.type == pygame.KEYUP: 
+            pressionando = True
+        if ev.type == pygame.KEYUP:
             key = pygame.key.name(ev.key)
             # print(key, "tecla Solta")
             pressionando = False
@@ -152,7 +149,7 @@ while True:
     player.draw(scr)
 
     tempo_decorrido = pygame.time.get_ticks() - tempo_inicial
-    tempo_restante = tempo_maximo - tempo_decorrido
+    tempo_restante = 120 * 1000 - tempo_decorrido
 
     if boss_vivo:
         boss.draw(scr)
@@ -161,10 +158,9 @@ while True:
     gun.x = player.x
     gun.y = player.y 
 
-    if(player.chapeu):
+    if player.chapeu:
         hat.x = player.x
         hat.y = player.y
-
 
     # Atualização tiros na tela e checagem de colisões
     gun.redesenha_tiro(scr, boss)
@@ -190,23 +186,22 @@ while True:
     # Verifica se o boss foi derrotado
     if boss.vida <= 0 and boss_vivo:
         boss_vivo = False
-        gold_total = calcula_gold_total(tempo_decorrido // 1000, player.vida)
+        gold_total = max(0, (moedas_iniciais - max(0, tempo_decorrido // 1000 - 20))) * player.vida
         pontuacao = gold_total
-        vitoria(scr, largura, altura,pontuacao)
+        vitoria(scr, largura, altura, pontuacao)
         player.moedas += gold_total
         
     # Gerar novos ataques
-    if pygame.time.get_ticks() - tempo_ultimo_ataque > intervalo_ataques:
+    if pygame.time.get_ticks() - tempo_ultimo_ataque > 700:
         boss.atacar(ataques, player)
         tempo_ultimo_ataque = pygame.time.get_ticks()
 
+    if tempo_restante <= 0 or player.vida <= 0:
+        if game_over(scr, largura, altura, pontuacao):
+            reset_turn()
 
-    if (tempo_restante <= 0 or player.vida <=0):
-        game_over(scr, largura, altura,pontuacao)
-
- 
     # Atualizar e desenhar ataques
-    if(boss_vivo):
+    if boss_vivo:
         for ataque in ataques[:]:
             ataque.update()
             ataque.draw(scr)

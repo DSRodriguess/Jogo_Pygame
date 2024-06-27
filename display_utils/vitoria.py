@@ -22,6 +22,6 @@ def vitoria(scr, largura, altura,moedas):
         scr.fill((0, 0, 0))
         scr.blit(texto_titulo, ((largura - texto_titulo.get_width()) // 2, altura // 4))
         scr.blit(texto_comecar, ((largura - texto_comecar.get_width()) // 2, altura // 2))
-        scr.blit(pontuacao, ((largura - texto_comecar.get_width()) // 2, altura // 3))
+        scr.blit(pontuacao, ((largura - pontuacao.get_width()) // 2, altura // 3))
 
         pygame.display.update()
