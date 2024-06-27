@@ -6,8 +6,8 @@ class Cowboy(Chapeu):
     def __init__(self,x,y):
         super().__init__(x,y)
         self.cor = [
+            (218,165,32),
             (150,75,0),
-            (218,165,32)
             ]
     
     def desenha_chapeu(self,scr):

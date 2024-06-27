@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
 from .personagem import Personagem
+from display_utils.game_over import game_over
+
 
 class Player(Personagem):
     def __init__(self, x, y, largura, altura, cor, vida=3):
@@ -93,6 +95,4 @@ class Player(Personagem):
         else:
             self.gravidade = True
             self.pulando = True
-
-    
 
