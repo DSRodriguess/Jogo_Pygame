@@ -12,6 +12,8 @@ from ataques.estalactite import Estalactite
 from ataques.pilar import PilarDeFogo
 from display_utils.moedas import mostrar_moedas
 from display_utils.relogio import mostrar_relogio
+from display_utils.game_over import game_over
+from display_utils.vitoria import vitoria
 from pprint import pprint
 import os
 import random
@@ -32,7 +34,7 @@ def tela_inicial(scr, largura, altura):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                sys.exit()
+                exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     rodando = False
@@ -48,6 +50,7 @@ global_count = 0
 largura = 1000
 altura = 800
 scr = pygame.display.set_mode((largura, altura))
+pontuacao = 0
 pygame.display.set_caption("EDL GAME")
 
 tela_inicial(scr, largura, altura)
@@ -65,7 +68,7 @@ player = Player(150, 500, 50, 50, (0, 0, 255), 3)
 
 boss_vivo = True
 # Cria o Boss (escolha um dos Bosses: TerraBoss, FogoBoss, CaosBoss)
-boss = CaosBoss(780, 600)
+boss = TerraBoss(780, 600)
 
 gun = Escopeta(player.x, player.y)
 # gun = Disco(player.x, player.y)
@@ -123,9 +126,6 @@ while True:
     if boss_vivo:
         boss.draw(scr)
 
-    if tempo_restante <= 0:
-        print("Tempo esgotado! Fim de jogo.")
-
     # Atualizacao posicao arma com o personagem
     gun.x = player.x
     gun.y = player.y
@@ -155,13 +155,19 @@ while True:
     if boss.vida <= 0 and boss_vivo:
         boss_vivo = False
         gold_total = calcula_gold_total(tempo_decorrido // 1000, player.vida)
-        print(f"Boss derrotado! Você ganhou {gold_total} moedas.")
+        pontuacao = gold_total
+        vitoria(scr, largura, altura,pontuacao)
         player.moedas += gold_total
         
     # Gerar novos ataques
     if pygame.time.get_ticks() - tempo_ultimo_ataque > intervalo_ataques:
         boss.atacar(ataques, player)
         tempo_ultimo_ataque = pygame.time.get_ticks()
+
+
+    if (tempo_restante <= 0 or player.vida <=0):
+        game_over(scr, largura, altura,pontuacao)
+
 
     # Atualizar e desenhar ataques
     for ataque in ataques[:]:
