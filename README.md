@@ -24,3 +24,5 @@
 [Apresentação 2](https://docs.google.com/presentation/d/1gv9BB-pc5wn2GNtmW34Bkv9aB0fPslBh86iQmRl6d6k/edit?usp=sharing)
 
 [Apresentação 3](https://docs.google.com/presentation/d/1yZe5SyWgLsLOpOisSK_eR_jkbdl0giNiPPcIOU0Hcm0/edit?usp=sharing)
+
+[Apresentação 4](https://docs.google.com/presentation/d/1g3ny1Hj1_jTnVRYbbZuJ8WFmBdoOOZyP9PdSCE0M7L0/edit?usp=sharing)
