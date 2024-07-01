@@ -28,13 +28,15 @@ class Boss(Personagem):
         if self.vida < 0:
             self.vida = 0
 
-    def checar_colisao(self, player):
+    def checar_colisao(self, player, colisao=False):
+        if colisao:
+            return False
         player_rect = pygame.Rect(player.x, player.y, player.largura, player.altura)
         boss_rect = pygame.Rect(self.x, self.y, self.largura, self.altura)
         return boss_rect.colliderect(player_rect)
     
-    def checa_dano_player(self,player):
-        if self.checar_colisao(player):
+    def checa_dano_player(self, player, colisao=False):
+        if self.checar_colisao(player, colisao):
             player.tempo_ultimo_dano = pygame.time.get_ticks()
             player.recuar(75,self.x,self.y)
             # player.x = self.x - player.largura -50 #recuo do player

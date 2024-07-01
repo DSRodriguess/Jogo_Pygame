@@ -41,6 +41,7 @@ def debugar(objeto):
     os.system('clear')
     pprint(vars(objeto))
 
+
 def tela_inicial(scr, largura, altura):
     fonte = pygame.font.SysFont(None, 74)
     texto_titulo = fonte.render('Jogo EDL', True, (255, 255, 255))
@@ -62,8 +63,18 @@ def tela_inicial(scr, largura, altura):
 
         pygame.display.update()
 
+layout = [
+    carregar_layout("./stage/layout0.txt"),
+    carregar_layout("./stage/layout1.txt"),
+    carregar_layout("./stage/layout0.txt"),
+]
+
+layout_loja = carregar_layout("./stage/layout2.txt")
+
+index = 0
+
 def reset_turn():
-    global player, boss, gun, hat, boss_vivo, tempo_inicial, moedas_iniciais, ataques, tempo_ultimo_ataque, pontuacao
+    global player, boss, gun, hat, boss_vivo, tempo_inicial, moedas_iniciais, ataques, tempo_ultimo_ataque, pontuacao, stage_atual
 
     # Cria o personagem passando (posição, tamanho, cor e vidas)
     player = Player(150, 500, 50, 50, (0, 0, 255), 3)
@@ -74,15 +85,15 @@ def reset_turn():
     
     # gun = Pistola(player.x,player.y)
     # gun = Escopeta(player.x,player.y)
-    # gun = Metralhadora(player.x, player.y)
+    gun = Metralhadora(player.x, player.y)
     # gun = Disco(player.x, player.y)
-    gun = Chamas(player.x, player.y)
+    # gun = Chamas(player.x, player.y)
     
     hat = 0
     # hat = Cowboy(player.x, player.y)
     # hat = Ninja(player.x, player.y)
-    hat = Nurse(player.x, player.y)
-    # hat = Russo(player.x, player.y)
+    # hat = Nurse(player.x, player.y)
+    hat = Russo(player.x, player.y)
     # hat = Mugi(player.x, player.y)
     
     if hat:
@@ -103,6 +114,44 @@ def reset_turn():
     # Pontuação inicial
     pontuacao = 0
 
+    stage_atual = Stage(scr, layout[index])
+
+
+def continue_turn():
+    global boss, gun, hat, boss_vivo, tempo_inicial, ataques, tempo_ultimo_ataque, stage_atual, player, index
+    
+    player.x = 150
+    player.y = 500
+    player.rect.x = 150
+    player.rect.y = 500
+
+    boss_vivo = True
+    # Cria o Boss (escolha um dos Bosses: TerraBoss, FogoBoss, CaosBoss)
+    if index == 1:
+        boss = FogoBoss(780, 600)
+    if index == 2:
+        boss = CaosBoss(780, 600)
+    
+    gun = Chamas(player.x, player.y)
+
+    hat = 0
+    hat = Nurse(player.x, player.y)
+    
+    if hat:
+        player.chapeu = hat
+    
+    # Tempo inicial
+    tempo_inicial = pygame.time.get_ticks()
+    
+    # Lista para armazenar os ataques
+    ataques = []
+    
+    # Temporizador para ataques
+    tempo_ultimo_ataque = pygame.time.get_ticks()
+   
+    stage_atual = Stage(scr, layout[index])
+
+
 pygame.init()
 global_count = 0
 largura = 1000
@@ -114,22 +163,19 @@ tela_inicial(scr, largura, altura)
 reset_turn()
 
 tile_size = 50
-layout = [
-    carregar_layout("./stage/layout1.txt"),
-    carregar_layout("./stage/layout2.txt")
-]
 
-stage_atual = Stage(scr, layout[1])
+stage_atual = Stage(scr, layout[0])
 
 # Define a taxa de quadros
 clock = pygame.time.Clock()
 # fps = 60
 
 pressionando = False
+loja = False
+colisaoboss = False
 while True:
     scr.fill((255, 255, 255)) 
     stage_atual.draw()
-    grids(scr, altura, largura)
 
     for ev in pygame.event.get():
         if ev.type == pygame.QUIT:
@@ -139,6 +185,9 @@ while True:
             key = pygame.key.name(ev.key)
             # print(key, "tecla Pressionada")
             pressionando = True
+
+            if ev.key == K_f:
+                loja_end = True
         if ev.type == pygame.KEYUP:
             key = pygame.key.name(ev.key)
             # print(key, "tecla Solta")
@@ -153,6 +202,13 @@ while True:
 
     if boss_vivo:
         boss.draw(scr)
+
+    if loja:
+        stage_atual = Stage(scr, layout_loja)
+        if loja_end:
+            loja = False
+            colisaoboss = False
+            continue_turn()
 
     # Atualizacao posicao arma com o personagem
     gun.x = player.x
@@ -176,7 +232,7 @@ while True:
     mostrar_relogio(scr, tempo_restante, largura)
     
     # Colisão boss x Player
-    boss.checa_dano_player(player)
+    boss.checa_dano_player(player, colisaoboss)
     player.reseta_invencibilidade()
 
     # Posicao central player e boss
@@ -189,7 +245,17 @@ while True:
         gold_total = max(0, (moedas_iniciais - max(0, tempo_decorrido // 1000 - 20))) * player.vida
         pontuacao = gold_total
         vitoria(scr, largura, altura, pontuacao)
+        index += 1
+        player.x = 101
+        player.y = 500
+        player.rect.x = 101
+        player.rect.y = 500
         player.moedas += gold_total
+        colisaoboss = True
+        loja = True
+        loja_end = False
+        if index == 4:
+            break # Fim do jogo
         
     # Gerar novos ataques
     if pygame.time.get_ticks() - tempo_ultimo_ataque > 700:
@@ -198,6 +264,7 @@ while True:
 
     if tempo_restante <= 0 or player.vida <= 0:
         if game_over(scr, largura, altura, pontuacao):
+            index = 0
             reset_turn()
 
     # Atualizar e desenhar ataques

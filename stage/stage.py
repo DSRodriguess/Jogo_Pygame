@@ -11,7 +11,10 @@ class Stage():
             for col in range(0, 20):
                 if self.stage[row][col] == 1:
                     pygame.draw.rect(self.scr, (255,0,0), (col * self.tile_size, row * self.tile_size, self.tile_size, self.tile_size))
-
+                if self.stage[row][col] == 2:
+                    pygame.draw.rect(self.scr, (100,100,0), (col * self.tile_size, row * self.tile_size, self.tile_size, self.tile_size))
+                if self.stage[row][col] == 3:
+                    pygame.draw.rect(self.scr, (100,100,100), (col * self.tile_size, row * self.tile_size, self.tile_size, self.tile_size))
     def checar_colisao(self, rect):
         for row in range(0, 16):
             for col in range(0, 20):
@@ -20,9 +23,6 @@ class Stage():
                     if rect.colliderect(wall):
                         return True
         return False
-
-def set_stage(current_stage, scr, novo_layout): #TODO: discutir a implementação, pois envolve mais de uma ação
-        current_stage = Stage(scr, novo_layout)
 
 def carregar_layout(filename):
     stage = []
