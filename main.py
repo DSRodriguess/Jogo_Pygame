@@ -66,89 +66,50 @@ def tela_inicial(scr, largura, altura):
 layout = [
     carregar_layout("./stage/layout0.txt"),
     carregar_layout("./stage/layout1.txt"),
-    carregar_layout("./stage/layout0.txt"),
+    carregar_layout("./stage/layout2.txt"),
 ]
 
-layout_loja = carregar_layout("./stage/layout2.txt")
+layout_loja = carregar_layout("./stage/loja.txt")
 
 index = 0
 
 def reset_turn():
     global player, boss, gun, hat, boss_vivo, tempo_inicial, moedas_iniciais, ataques, tempo_ultimo_ataque, pontuacao, stage_atual
-
-    # Cria o personagem passando (posição, tamanho, cor e vidas)
     player = Player(150, 500, 50, 50, (0, 0, 255), 3)
-    
     boss_vivo = True
-    # Cria o Boss (escolha um dos Bosses: TerraBoss, FogoBoss, CaosBoss)
     boss = TerraBoss(780, 600)
-    
-    # gun = Pistola(player.x,player.y)
-    # gun = Escopeta(player.x,player.y)
     gun = Metralhadora(player.x, player.y)
-    # gun = Disco(player.x, player.y)
-    # gun = Chamas(player.x, player.y)
-    
     hat = 0
-    # hat = Cowboy(player.x, player.y)
-    # hat = Ninja(player.x, player.y)
-    # hat = Nurse(player.x, player.y)
-    hat = Russo(player.x, player.y)
-    # hat = Mugi(player.x, player.y)
-    
+    hat = Cowboy(player.x, player.y)
     if hat:
         player.chapeu = hat
-    
-    # Tempo inicial
     tempo_inicial = pygame.time.get_ticks()
-    
-    # Moedas iniciais
     moedas_iniciais = 100
-    
-    # Lista para armazenar os ataques
     ataques = []
-    
-    # Temporizador para ataques
     tempo_ultimo_ataque = pygame.time.get_ticks()
-    
-    # Pontuação inicial
     pontuacao = 0
-
     stage_atual = Stage(scr, layout[index])
 
 
 def continue_turn():
     global boss, gun, hat, boss_vivo, tempo_inicial, ataques, tempo_ultimo_ataque, stage_atual, player, index
-    
     player.x = 150
     player.y = 500
     player.rect.x = 150
     player.rect.y = 500
-
     boss_vivo = True
-    # Cria o Boss (escolha um dos Bosses: TerraBoss, FogoBoss, CaosBoss)
     if index == 1:
         boss = FogoBoss(780, 600)
     if index == 2:
         boss = CaosBoss(780, 600)
-    
-    gun = Chamas(player.x, player.y)
-
+    gun = Metralhadora(player.x, player.y)
     hat = 0
     hat = Nurse(player.x, player.y)
-    
     if hat:
         player.chapeu = hat
-    
-    # Tempo inicial
     tempo_inicial = pygame.time.get_ticks()
-    
-    # Lista para armazenar os ataques
     ataques = []
-    
-    # Temporizador para ataques
     tempo_ultimo_ataque = pygame.time.get_ticks()
-   
     stage_atual = Stage(scr, layout[index])
 
 
@@ -254,7 +215,7 @@ while True:
         colisaoboss = True
         loja = True
         loja_end = False
-        if index == 4:
+        if index == 3:
             break # Fim do jogo
         
     # Gerar novos ataques
