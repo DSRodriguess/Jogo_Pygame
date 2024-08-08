@@ -1,28 +1,10 @@
-# Jogo_EDL
+# Jogo Pygame
 
-### Informações baseadas nas apresentações em aula
+### Informações :
+	Jogo feito para disciplina de EDL com o intuito de demonstrar alguns critérios abordados na disciplina.
+	
+	1. Movimentação do personagem é feita com as teclas A (esquerda), D (direita), S (pulo) e W (baixo).
+	2. Os ataques são feitos com a tecla X ou espaço.
+	3. Para fazer a compra dos itens aperte F no item que deseja.(Loja ainda esta sendo implementada no momento).
 
-    1. Demonstrar oque é o jogo
-    2. Legibilidade do slide 
-    3. Contextualizar conceitos da linguagem com a matéria de EDL
-    4. Numeros no slide
-    5. Explicar tipos de mecânicas usadas
-    6. Focar em mecânicas e não estética
-    7. 4 apresentações 10minutos (1/semana)
-    8. Colocar na tabela do excell nome e github
-    9. Fazer Slides
-
-### Separação de Tarefas do grupo
-
-    1. Tiago - Confecção Tela e fundos do Jogo
-    2. David - Desenvolvimento Personagens
-    3. Alexandre - Desenvolvimento Armas e Eventos
-
-#### Apresentações
-[Apresentação 1](https://docs.google.com/presentation/d/1C6HZsTGSgbM1eXTBr5OfzTL8NW4UrfCZ3oVO632PLdQ/edit?usp=sharing)
-
-[Apresentação 2](https://docs.google.com/presentation/d/1gv9BB-pc5wn2GNtmW34Bkv9aB0fPslBh86iQmRl6d6k/edit?usp=sharing)
-
-[Apresentação 3](https://docs.google.com/presentation/d/1yZe5SyWgLsLOpOisSK_eR_jkbdl0giNiPPcIOU0Hcm0/edit?usp=sharing)
-
-[Apresentação 4](https://docs.google.com/presentation/d/1g3ny1Hj1_jTnVRYbbZuJ8WFmBdoOOZyP9PdSCE0M7L0/edit?usp=sharing)
+    
